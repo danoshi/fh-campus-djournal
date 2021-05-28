@@ -1,5 +1,6 @@
 package fh.campus.djournal.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -7,8 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import fh.campus.djournal.R
 import fh.campus.djournal.databinding.ActivityLoginBinding
+import kotlin.math.log
 
 class LoginActivity : AppCompatActivity() {
 
@@ -17,8 +21,29 @@ class LoginActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        auth = Firebase.auth
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        checkLogin()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val currentUser = auth.currentUser
+        if(currentUser != null){
+            reload()
+        }
+    }
+
+    private fun checkLogin(){
+        var emailAddress = binding.editTextTextEmailAddress
+        var password = binding.editTextTextPassword
+        var login = binding.buttonSignIn
+
+        login.setOnClickListener {
+            signIn(emailAddress.text.toString(), password.text.toString())
+            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+        }
     }
 
     private fun signIn(email: String, password: String) {
@@ -40,6 +65,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun updateUI(user: FirebaseUser?) {
+
+    }
+
+    private fun reload() {
 
     }
 
