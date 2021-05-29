@@ -14,10 +14,13 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import fh.campus.djournal.R
 import fh.campus.djournal.adapters.JournalListAdapter
 import fh.campus.djournal.databinding.FragmentHomeBinding
+import fh.campus.djournal.databinding.NewJournalDialogBinding
+import fh.campus.djournal.models.Journal
 import fh.campus.djournal.models.JournalStore
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var dialogBinding: NewJournalDialogBinding
 
 
     override fun onCreateView(
@@ -34,11 +37,6 @@ class HomeFragment : Fragment() {
         subscribeUI(adapter)
 
         binding.addNewJournal.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "TODO: dialog to enter title and description for new Journal",
-                Toast.LENGTH_SHORT
-            ).show()
             addNewJournal()
         }
 
@@ -53,34 +51,24 @@ class HomeFragment : Fragment() {
 
     private fun addNewJournal() {
         MaterialAlertDialogBuilder(requireContext())
-//            .setTitle("New Journal")
             .setView(R.layout.new_journal_dialog)
             .setNeutralButton("Cancel") { dialog, which ->
-                // Respond to neutral button press
+                dialog.cancel()
             }
             .setPositiveButton("Create") { dialog, which ->
-                // Respond to positive button press
+                val journalTitle = dialogBinding.editTextJournalTitle
+                val journalDescription = dialogBinding.editTextJournalDescription
+                val journalColor = dialogBinding.editTextJournalColor
+                toastMaker("New Journal was created")
             }
             .show()
     }
-/*
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Title")
-        val input = EditText(requireContext())
-        input.inputType = InputType.TYPE_CLASS_TEXT
-        builder.setView(input)
-        builder.setPositiveButton(
-            "Save"
-        ) { dialog, which ->
-//            note = input.text.toString()
-//            movieObj.note = note
-//            movieFavoriteViewModel.updateMovie(movieObj)
-        }
-        builder.setNegativeButton(
-            "Cancel"
-        ) { dialog, which -> dialog.cancel() }
 
-        builder.show()
+    private fun toastMaker(msg: String) {
+        Toast.makeText(
+            requireContext(),
+            msg,
+            Toast.LENGTH_SHORT
+        ).show()
     }
-*/
 }
