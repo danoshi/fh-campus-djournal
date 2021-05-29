@@ -23,26 +23,28 @@ class RegistrationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_registration)
         checkFields()
+        switchToSignIn()
     }
 
-    fun checkFields(){
+    private fun checkFields(){
         var emailAddress = binding.editTextTextEmailAddress
         var password = binding.editTextTextPassword
         var register = binding.buttonSignUp
         register.setOnClickListener {
-            createAccount(emailAddress.text.toString(), password.text.toString())
-            sendEmailVerification()
-            startActivity(Intent(this@RegistrationActivity,LoginActivity::class.java))
-
-            if (emailAddress != null && password == null){
-                binding.editTextTextPassword.setError("Please enter your password")
+            if (!(emailAddress.text.toString().isEmpty() && password.text.toString().isEmpty())) {
+                createAccount(emailAddress.text.toString(), password.text.toString())
+                sendEmailVerification()
+                startActivity(Intent(this@RegistrationActivity, LoginActivity::class.java))
+            }
+            else if (emailAddress.text.toString().isEmpty()){
+                binding.editTextTextPassword.setError("Please enter your email")
                 binding.editTextTextPassword.requestFocus()
             }
-            else if (emailAddress == null && password != null){
-                binding.editTextTextEmailAddress.setError("Please enter your email")
+            else if (password.text.toString().isEmpty()){
+                binding.editTextTextEmailAddress.setError("Please enter your password")
                 binding.editTextTextEmailAddress.requestFocus()
             }
-            else if (emailAddress == null && password == null){
+            else if (emailAddress.text.toString().isEmpty() && password.text.toString().isEmpty()){
                 Toast.makeText(baseContext, "Fields are empty", Toast.LENGTH_SHORT).show()
             }
         }
@@ -83,6 +85,13 @@ class RegistrationActivity : AppCompatActivity() {
                         "Verfication email have could not be sent",
                         Toast.LENGTH_SHORT
                     ).show()) }
+    }
+
+    private fun switchToSignIn(){
+        var signInLabel = binding.textViewSignIn
+        signInLabel.setOnClickListener {
+            startActivity(Intent(this@RegistrationActivity, LoginActivity::class.java))
+        }
     }
 
     private fun updateUI(user: FirebaseUser?) {

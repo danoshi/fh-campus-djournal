@@ -25,6 +25,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         checkLogin()
+        switchSignUp()
     }
 
     override fun onStart() {
@@ -41,8 +42,21 @@ class LoginActivity : AppCompatActivity() {
         var login = binding.buttonSignIn
 
         login.setOnClickListener {
-            signIn(emailAddress.text.toString(), password.text.toString())
-            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+            if (!(emailAddress.text.toString().isEmpty() && password.text.toString().isEmpty())) {
+                signIn(emailAddress.text.toString(), password.text.toString())
+                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+            }
+            else if (emailAddress.text.toString().isEmpty()){
+                binding.editTextTextEmailAddress.setError("Provide an email address")
+                binding.editTextTextEmailAddress.requestFocus()
+            }
+            else if (password.text.toString().isEmpty()){
+                binding.editTextTextPassword.setError("Provide an password")
+                binding.editTextTextPassword.requestFocus()
+            }
+            else if (emailAddress.text.toString().isEmpty() && password.text.toString().isEmpty()){
+                Toast.makeText(baseContext, "Fields are empty", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -62,6 +76,13 @@ class LoginActivity : AppCompatActivity() {
                     updateUI(null)
                 }
             }
+    }
+
+    private fun switchSignUp(){
+        var signUpLabel = binding.textViewSignUp
+        signUpLabel.setOnClickListener {
+            startActivity(Intent(this@LoginActivity, RegistrationActivity::class.java))
+        }
     }
 
     private fun updateUI(user: FirebaseUser?) {
