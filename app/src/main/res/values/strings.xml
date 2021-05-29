@@ -4,4 +4,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="welcome_to_djournal">Welcome to Djournal</string>
     <string name="journal_image">journal_image</string>
+    <string name="addbtn">Add new Journal</string>
 </resources>
