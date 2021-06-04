@@ -6,10 +6,17 @@
     <string name="journal_image">journal_image</string>
     <string name="addbtn">Add new Journal</string>
     <string name="new_journal_title">new journal title</string>
-    <string name="enter_journal_description">enter Journal description ...</string>
+    <string name="enter_journal_description">enter Journal description</string>
     <string name="enter_journal_color">enter journal color</string>
     <string name="journal_title">Journal Title</string>
     <string name="journal_description">Journal Description</string>
     <string name="journal_color">Journal Color</string>
     <string name="new_journal">New Journal</string>
+    <string name="create_new_journal">Create New Journal</string>
+    <string name="name">Name:</string>
+    <string name="cancel">CANCEL</string>
+    <string name="create">CREATE</string>
+    <string name="enter_journal_name">enter journal name</string>
+    <string name="description">Description:</string>
+    <string name="color">Color:</string>
 </resources>

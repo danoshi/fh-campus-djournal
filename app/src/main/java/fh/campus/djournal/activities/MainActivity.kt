@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
         navController = this.findNavController(R.id.navhostFragment)
         // setup the action bar/top menu with our navController
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
-
         NavigationUI.setupWithNavController(binding.navView, navController)
     }
 

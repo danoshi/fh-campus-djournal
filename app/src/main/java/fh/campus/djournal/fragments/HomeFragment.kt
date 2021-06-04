@@ -1,26 +1,25 @@
 package fh.campus.djournal.fragments
 
-import android.app.AlertDialog
 import android.os.Bundle
-import android.text.InputType
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import fh.campus.djournal.CreateNewJournalFragment
 import fh.campus.djournal.R
 import fh.campus.djournal.adapters.JournalListAdapter
 import fh.campus.djournal.databinding.FragmentHomeBinding
-import fh.campus.djournal.databinding.NewJournalDialogBinding
 import fh.campus.djournal.models.Journal
 import fh.campus.djournal.models.JournalStore
+import fh.campus.djournal.models.Util
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(){
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var dialogBinding: NewJournalDialogBinding
+    private val journalList: MutableList<Journal> = JournalStore.exampleJournals
+    private var pressedNewJournal: Boolean = false
+
 
 
     override fun onCreateView(
@@ -36,8 +35,18 @@ class HomeFragment : Fragment() {
 
         subscribeUI(adapter)
 
+        val args = HomeFragmentArgs.fromBundle(requireArguments())
+        pressedNewJournal = args.pressedNewJournal
+        if(pressedNewJournal) {
+            journalList.add(Journal(args.name, args.description))
+            adapter.notifyDataSetChanged()
+            pressedNewJournal = false
+        }
+
+
         binding.addNewJournal.setOnClickListener {
-            addNewJournal()
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCreateNewJournalFragment())
+//            adapter.notifyDataSetChanged()
         }
 
         return binding.root
@@ -49,26 +58,4 @@ class HomeFragment : Fragment() {
         adapter.submitList(journalList.defaultJournals)
     }
 
-    private fun addNewJournal() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setView(R.layout.new_journal_dialog)
-            .setNeutralButton("Cancel") { dialog, which ->
-                dialog.cancel()
-            }
-            .setPositiveButton("Create") { dialog, which ->
-                val journalTitle = dialogBinding.editTextJournalTitle
-                val journalDescription = dialogBinding.editTextJournalDescription
-                val journalColor = dialogBinding.editTextJournalColor
-                toastMaker("New Journal was created")
-            }
-            .show()
-    }
-
-    private fun toastMaker(msg: String) {
-        Toast.makeText(
-            requireContext(),
-            msg,
-            Toast.LENGTH_SHORT
-        ).show()
-    }
 }
