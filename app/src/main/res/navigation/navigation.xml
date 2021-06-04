@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="fh.campus.djournal.fragments.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_createNewJournalFragment"
+            app:destination="@id/createNewJournalFragment" />
+        <argument
+            android:name="pressedNewJournal"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="name"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="description"
+            app:argType="string"
+            android:defaultValue='""' />
+    </fragment>
+    <fragment
+        android:id="@+id/createNewJournalFragment"
+        android:name="fh.campus.djournal.CreateNewJournalFragment"
+        android:label="CreateNewJournalFragment" >
+        <action
+            android:id="@+id/action_createNewJournalFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+</navigation>
