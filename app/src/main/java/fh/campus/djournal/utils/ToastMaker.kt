@@ -1,9 +1,9 @@
-package fh.campus.djournal.models
+package fh.campus.djournal.utils
 
 import android.content.Context
 import android.widget.Toast
 
-class Util {
+class ToastMaker {
     fun toastMaker(context: Context, msg: String) {
         Toast.makeText(
             context,
