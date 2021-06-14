@@ -1,14 +1,25 @@
 package fh.campus.djournal.adapters
 
+import android.app.AlertDialog
+import android.content.Context
+import android.text.InputType
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import fh.campus.djournal.R
 import fh.campus.djournal.databinding.JournalItemBinding
 import fh.campus.djournal.models.Journal
+import fh.campus.djournal.models.Util
 
-class JournalListAdapter(private var dataSet: List<Journal>) :
+class JournalListAdapter(
+    private var dataSet: List<Journal>,
+    val onJournalItemClicked: (Journal) -> Unit,
+) :
     RecyclerView.Adapter<JournalListAdapter.ViewHolder>() {
 
     fun updateDataSet(journals: List<Journal>) {
@@ -18,6 +29,14 @@ class JournalListAdapter(private var dataSet: List<Journal>) :
 
     inner class ViewHolder(private val binding: JournalItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.journalItem.setOnLongClickListener {
+                binding.journal?.let { journal ->
+                    onJournalItemClicked(journal)
+                }
+                true
+            }
+        }
 
         fun bind(journalItem: Journal) {
             with(binding) {
