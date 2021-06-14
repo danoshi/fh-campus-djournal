@@ -37,7 +37,7 @@ class HomeFragment : Fragment() {
 
         val adapter = JournalListAdapter(
             dataSet = listOf(),     // start with empty list
-            onJournalItemClicked = {journal -> journalOptionDialog(journal) }
+            onJournalItemClicked = { journal -> journalOptionDialog(journal) }
         )    // instantiate a new MovieListAdapter for recyclerView
         binding.journalList.adapter = adapter // assign adapter to the recyclerView
 
@@ -68,19 +68,35 @@ class HomeFragment : Fragment() {
 
     private fun journalOptionDialog(journal: Journal) {
         val items = arrayOf("Rename", "New Description", "Delete")
-
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Options")
             .setItems(items) { dialog, which ->
-                if (which == 0) {
-                    Log.i("AAAA", "RENAME")
-                } else if (which == 1) {
-                    Log.i("AAAA", "New Description")
-                } else if (which == 2) {
-                    journalViewModel.deleteJournal(journal)
+                when (which) {
+                    0 -> {
+                        Log.i("AAAA", "RENAME")
+                    }
+                    1 -> {
+                        Log.i("AAAA", "New Description")
+                    }
+                    2 -> {
+                        deleteConfirmationDialog(journal)
+                    }
                 }
             }
             .setPositiveButton("CANCEL") { dialog, which ->
+                dialog.cancel()
+            }
+            .show()
+    }
+
+    private fun deleteConfirmationDialog(journal: Journal) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("DANGER")
+            .setMessage("Are you sure you want to delete this journal?")
+            .setPositiveButton("CONFIRM") { dialog, which ->
+                journalViewModel.deleteJournal(journal)
+            }
+            .setNegativeButton("CANCEL") { dialog, which ->
                 dialog.cancel()
             }
             .show()
