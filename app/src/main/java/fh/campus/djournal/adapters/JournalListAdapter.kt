@@ -42,14 +42,6 @@ class JournalListAdapter :
         private val binding: JournalItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-//        init {
-//            binding.goToDetailBtn.setOnClickListener{ btnView ->
-//                binding.movie?.id?.let { itemId->
-//                    btnView.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailFragment(itemId.toString()))
-//                }
-//            }
-//        }
-
         fun bind(journalItem: Journal) {
             with(binding) {
                 journal = journalItem

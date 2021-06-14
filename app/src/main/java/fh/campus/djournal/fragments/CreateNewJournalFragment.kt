@@ -1,4 +1,4 @@
-package fh.campus.djournal
+package fh.campus.djournal.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
+import fh.campus.djournal.R
 import fh.campus.djournal.databinding.FragmentCreateNewJournalBinding
-import fh.campus.djournal.fragments.HomeFragmentDirections
 import fh.campus.djournal.models.Journal
 
 class CreateNewJournalFragment : Fragment() {
@@ -42,10 +42,18 @@ class CreateNewJournalFragment : Fragment() {
         val title = binding.editTextNewJournalName.text.toString()
         val description = binding.editTextNewJournalDescription.text.toString()
         val color = binding.editTextNewJournalColor.text.toString()
-        val newJournal = Journal(title,description)
+        if(title.isEmpty() && description.isEmpty()) {
+            binding.editTextNewJournalName.setError("Please Enter a Name")
+            binding.editTextNewJournalDescription.setError("Please Enter a Description")
+        } else if (title.isEmpty()) {
+            binding.editTextNewJournalName.setError("Please Enter a Name")
+        } else if (description.isEmpty()) {
+            binding.editTextNewJournalDescription.setError("Please Enter a Description")
+        } else {
+            findNavController().navigate(CreateNewJournalFragmentDirections.actionCreateNewJournalFragmentToHomeFragment(pressedNewJournal,title, description))
+        }
 
 //        findNavController().navigate(CreateNewJournalFragmentDirections.actionCreateNewJournalFragmentToHomeFragment(title, description))
-        findNavController().navigate(CreateNewJournalFragmentDirections.actionCreateNewJournalFragmentToHomeFragment(pressedNewJournal,title, description))
     }
 
     private fun onCancel() {

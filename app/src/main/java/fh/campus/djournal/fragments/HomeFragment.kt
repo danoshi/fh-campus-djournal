@@ -7,13 +7,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import fh.campus.djournal.CreateNewJournalFragment
 import fh.campus.djournal.R
 import fh.campus.djournal.adapters.JournalListAdapter
 import fh.campus.djournal.databinding.FragmentHomeBinding
 import fh.campus.djournal.models.Journal
 import fh.campus.djournal.models.JournalStore
-import fh.campus.djournal.models.Util
 
 class HomeFragment : Fragment(){
     private lateinit var binding: FragmentHomeBinding

@@ -1,6 +1,5 @@
 package fh.campus.djournal.models
 
-import java.util.*
 
 data class Journal(
     var title: String = "",
