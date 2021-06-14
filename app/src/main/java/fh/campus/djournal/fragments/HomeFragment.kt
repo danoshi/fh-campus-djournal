@@ -6,18 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import fh.campus.djournal.R
 import fh.campus.djournal.adapters.JournalListAdapter
+import fh.campus.djournal.database.AppDatabase
 import fh.campus.djournal.databinding.FragmentHomeBinding
-import fh.campus.djournal.models.Journal
-import fh.campus.djournal.models.JournalStore
+import fh.campus.djournal.repositories.JournalRepository
+import fh.campus.djournal.viewmodels.JournalViewModel
+import fh.campus.djournal.viewmodels.JournalViewModelFactory
 
-class HomeFragment : Fragment(){
+class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private val journalList: MutableList<Journal> = JournalStore.exampleJournals
-    private var pressedNewJournal: Boolean = false
-
+    private lateinit var journalViewModel: JournalViewModel
+    private lateinit var viewModelFactory: JournalViewModelFactory
 
 
     override fun onCreateView(
@@ -28,32 +31,34 @@ class HomeFragment : Fragment(){
 
         setHasOptionsMenu(true) // enable the options menu in the action bar
 
-        val adapter = JournalListAdapter()    // instantiate a new MovieListAdapter for recyclerView
+        val adapter = JournalListAdapter(
+            dataSet = listOf(),     // start with empty list
+        )    // instantiate a new MovieListAdapter for recyclerView
         binding.journalList.adapter = adapter // assign adapter to the recyclerView
 
-        subscribeUI(adapter)
+        val application = requireNotNull(this.activity).application
 
-        val args = HomeFragmentArgs.fromBundle(requireArguments())
-        pressedNewJournal = args.pressedNewJournal
-        if(pressedNewJournal) {
-            journalList.add(Journal(args.name, args.description))
-            adapter.notifyDataSetChanged()
-            pressedNewJournal = false
-        }
+        val dataSource = AppDatabase.getDatabase(application).journalDao
+        val repository = JournalRepository.getInstance(dataSource)
+        viewModelFactory = JournalViewModelFactory(repository)
 
+        journalViewModel =
+            ViewModelProvider(
+                this, viewModelFactory
+            ).get(JournalViewModel::class.java)
+
+        binding.lifecycleOwner = this
+        binding.journalTrackerViewModel = journalViewModel
+
+        journalViewModel.journals.observe(
+            viewLifecycleOwner,
+            Observer { journals -> adapter.updateDataSet(journals) })
 
         binding.addNewJournal.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCreateNewJournalFragment())
-//            adapter.notifyDataSetChanged()
         }
 
         return binding.root
-    }
-
-    private fun subscribeUI(adapter: JournalListAdapter) {
-        //TODO remove later only for testing purposes, or change it so it fetches already created journals from user
-        val journalList = JournalStore()
-        adapter.submitList(journalList.defaultJournals)
     }
 
 }
