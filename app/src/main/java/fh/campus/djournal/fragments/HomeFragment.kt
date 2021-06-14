@@ -1,10 +1,13 @@
 package fh.campus.djournal.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -25,6 +28,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var journalViewModel: JournalViewModel
     private lateinit var viewModelFactory: JournalViewModelFactory
+    private var newTitle = ""
 
 
     override fun onCreateView(
@@ -73,7 +77,7 @@ class HomeFragment : Fragment() {
             .setItems(items) { dialog, which ->
                 when (which) {
                     0 -> {
-                        Log.i("AAAA", "RENAME")
+                        updateNameDialog(journal)
                     }
                     1 -> {
                         Log.i("AAAA", "New Description")
@@ -100,5 +104,25 @@ class HomeFragment : Fragment() {
                 dialog.cancel()
             }
             .show()
+    }
+
+    private fun updateNameDialog(journal: Journal) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Rename")
+        val input = EditText(requireContext())
+        input.inputType = InputType.TYPE_CLASS_TEXT
+        builder.setView(input)
+        builder.setPositiveButton(
+            "Save"
+        ) { dialog, which ->
+            newTitle = input.text.toString()
+            journal.title = newTitle
+            journalViewModel.updateJournal(journal)
+        }
+        builder.setNegativeButton(
+            "Cancel"
+        ) { dialog, which -> dialog.cancel() }
+
+        builder.show()
     }
 }
