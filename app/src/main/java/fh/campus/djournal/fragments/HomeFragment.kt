@@ -1,18 +1,24 @@
 package fh.campus.djournal.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import fh.campus.djournal.R
 import fh.campus.djournal.adapters.JournalListAdapter
 import fh.campus.djournal.database.AppDatabase
 import fh.campus.djournal.databinding.FragmentHomeBinding
+import fh.campus.djournal.models.Journal
+import fh.campus.djournal.repositories.Dialogs
 import fh.campus.djournal.repositories.JournalRepository
 import fh.campus.djournal.viewmodels.JournalViewModel
 import fh.campus.djournal.viewmodels.JournalViewModelFactory
@@ -31,10 +37,6 @@ class HomeFragment : Fragment() {
 
         setHasOptionsMenu(true) // enable the options menu in the action bar
 
-        val adapter = JournalListAdapter(
-            dataSet = listOf(),     // start with empty list
-        )    // instantiate a new MovieListAdapter for recyclerView
-        binding.journalList.adapter = adapter // assign adapter to the recyclerView
 
         val application = requireNotNull(this.activity).application
 
@@ -46,6 +48,14 @@ class HomeFragment : Fragment() {
             ViewModelProvider(
                 this, viewModelFactory
             ).get(JournalViewModel::class.java)
+
+        val dialog = Dialogs(requireContext(), journalViewModel)
+
+        val adapter = JournalListAdapter(
+            dataSet = listOf(),     // start with empty list
+            onJournalItemClicked = { journal -> dialog.journalOptionDialog(journal) }
+        )    // instantiate a new MovieListAdapter for recyclerView
+        binding.journalList.adapter = adapter // assign adapter to the recyclerView
 
         binding.lifecycleOwner = this
         binding.journalTrackerViewModel = journalViewModel
@@ -60,5 +70,6 @@ class HomeFragment : Fragment() {
 
         return binding.root
     }
+
 
 }
