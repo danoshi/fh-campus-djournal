@@ -1,7 +1,9 @@
-package fh.campus.djournal.models
+package fh.campus.djournal.utils
+
+import fh.campus.djournal.models.Journal
 
 //TODO: remove class later, only for testing purposes
-data class JournalStore(val myJournals: MutableList<Journal> = mutableListOf()) {
+class JournalStore(val myJournals: MutableList<Journal> = mutableListOf()) {
 
     val defaultJournals = exampleJournals
 
@@ -9,7 +11,7 @@ data class JournalStore(val myJournals: MutableList<Journal> = mutableListOf()) 
         return defaultJournals.find { journal -> journal.id.toString() == uuid }
     }
 
-    companion object{
+    companion object {
         val exampleJournals: MutableList<Journal> = createStaticJournalList()
 
         private fun createStaticJournalList(): MutableList<Journal> {

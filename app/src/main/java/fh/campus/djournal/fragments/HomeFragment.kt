@@ -1,24 +1,19 @@
 package fh.campus.djournal.fragments
 
-import android.app.AlertDialog
 import android.os.Bundle
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import fh.campus.djournal.R
 import fh.campus.djournal.adapters.JournalListAdapter
 import fh.campus.djournal.database.AppDatabase
 import fh.campus.djournal.databinding.FragmentHomeBinding
-import fh.campus.djournal.models.Journal
-import fh.campus.djournal.repositories.Dialogs
+import fh.campus.djournal.utils.Dialogs
 import fh.campus.djournal.repositories.JournalRepository
 import fh.campus.djournal.viewmodels.JournalViewModel
 import fh.campus.djournal.viewmodels.JournalViewModelFactory
@@ -53,7 +48,8 @@ class HomeFragment : Fragment() {
 
         val adapter = JournalListAdapter(
             dataSet = listOf(),     // start with empty list
-            onJournalItemClicked = { journal -> dialog.journalOptionDialog(journal) }
+            onJournalItemLongClicked = { journal -> dialog.journalOptionDialog(journal) },
+            onJournalItemShortClicked = { journal ->  findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNotesFragment(journal.id))}
         )    // instantiate a new MovieListAdapter for recyclerView
         binding.journalList.adapter = adapter // assign adapter to the recyclerView
 

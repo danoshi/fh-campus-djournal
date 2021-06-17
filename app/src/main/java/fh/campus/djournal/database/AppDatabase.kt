@@ -5,10 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import fh.campus.djournal.models.Journal
+import fh.campus.djournal.models.Note
 
-@Database(entities = arrayOf(Journal::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(Journal::class, Note::class), version = 3, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract val journalDao: JournalDao
+    abstract val noteDao: NoteDao
 
     companion object {
 
@@ -23,7 +25,7 @@ abstract class AppDatabase : RoomDatabase() {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         AppDatabase::class.java,
-                        "journal_database"
+                        "dJournal_database"
                     )
                         .fallbackToDestructiveMigration()
                         .build()

@@ -1,4 +1,4 @@
-package fh.campus.djournal.repositories
+package fh.campus.djournal.utils
 
 import android.app.AlertDialog
 import android.content.Context
