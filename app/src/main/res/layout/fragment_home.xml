@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".fragments.HomeFragment">
+    <data>
+
+        <variable
+            name="journalTrackerViewModel"
+            type="fh.campus.djournal.viewmodels.JournalViewModel" />
+    </data>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout

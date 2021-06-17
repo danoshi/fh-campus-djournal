@@ -2,11 +2,18 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="journalTrackerViewModel"
+            type="fh.campus.djournal.viewmodels.JournalViewModel" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".CreateNewJournalFragment">
+        tools:context=".fragments.CreateNewJournalFragment">
 
         <TextView
             android:id="@+id/newJournalTitle"
@@ -33,10 +40,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_medium"
             android:layout_marginRight="@dimen/margin_medium"
+            android:autofillHints="@string/enter_journal_name"
             android:ems="10"
-            android:inputType="textPersonName"
             android:hint="@string/enter_journal_name"
-            android:autofillHints="@string/enter_journal_name" />
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/editTextDescriptionLable"
@@ -53,10 +60,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_medium"
             android:layout_marginRight="@dimen/margin_medium"
+            android:autofillHints="@string/enter_journal_description"
             android:ems="10"
-            android:inputType="textPersonName"
             android:hint="@string/enter_journal_description"
-            android:autofillHints="@string/enter_journal_description" />
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/editTextColorLabel"
@@ -73,10 +80,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_medium"
             android:layout_marginRight="@dimen/margin_medium"
+            android:autofillHints="@string/enter_journal_color"
             android:ems="10"
-            android:inputType="textPersonName"
             android:hint="@string/enter_journal_color"
-            android:autofillHints="@string/enter_journal_color" />
+            android:inputType="textPersonName" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,23 +93,23 @@
 
             <Button
                 android:id="@+id/btnCancel"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_medium"
                 android:layout_marginRight="@dimen/margin_medium"
                 android:layout_weight="1"
-                android:text="@string/cancel"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:text="@string/cancel" />
 
             <Button
                 android:id="@+id/btnCreate"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_medium"
                 android:layout_marginRight="@dimen/margin_medium"
                 android:layout_weight="1"
-                android:text="@string/create"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:text="@string/create" />
         </LinearLayout>
 
 
