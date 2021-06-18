@@ -31,10 +31,8 @@ class RegistrationActivity : AppCompatActivity() {
         var password = binding.editTextTextPassword
         var register = binding.buttonSignUp
         register.setOnClickListener {
-            if (!(emailAddress.text.toString().isEmpty() && password.text.toString().isEmpty())) {
-                createAccount(emailAddress.text.toString(), password.text.toString())
-                sendEmailVerification()
-                startActivity(Intent(this@RegistrationActivity, LoginActivity::class.java))
+            if (emailAddress.text.toString().isEmpty() && password.text.toString().isEmpty()){
+                Toast.makeText(baseContext, "Fields are empty", Toast.LENGTH_SHORT).show()
             }
             else if (emailAddress.text.toString().isEmpty()){
                 binding.editTextTextPassword.setError("Please enter your email")
@@ -44,8 +42,11 @@ class RegistrationActivity : AppCompatActivity() {
                 binding.editTextTextEmailAddress.setError("Please enter your password")
                 binding.editTextTextEmailAddress.requestFocus()
             }
-            else if (emailAddress.text.toString().isEmpty() && password.text.toString().isEmpty()){
-                Toast.makeText(baseContext, "Fields are empty", Toast.LENGTH_SHORT).show()
+
+            else if (!(emailAddress.text.toString().isEmpty() && password.text.toString().isEmpty())) {
+                createAccount(emailAddress.text.toString(), password.text.toString())
+                sendEmailVerification()
+                startActivity(Intent(this@RegistrationActivity, LoginActivity::class.java))
             }
         }
     }
