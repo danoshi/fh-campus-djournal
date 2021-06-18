@@ -42,4 +42,10 @@ class NoteViewModel(
         return repository.getNotesFromJournal(journalId)
     }
 
+    fun clearNotesFromJournal(journalId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.clearNotesFromJournal(journalId)
+        }
+    }
+
 }

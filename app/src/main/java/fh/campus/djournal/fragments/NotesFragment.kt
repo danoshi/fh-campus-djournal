@@ -51,7 +51,7 @@ class NotesFragment : Fragment() {
 
         val adapter = NoteListAdapter(
             dataSet = listOf(),
-            onNoteItemShortClicked = { note -> ToastMaker().toastMaker(requireContext(), "NOT YET IMPLEMENTED")},
+            onNoteItemShortClicked = { note -> },
             onNoteItemLongClicked = { note -> dialog.noteOptionDialog(note)},
         )    // instantiate a new MovieListAdapter for recyclerView
         binding.noteList.adapter = adapter // assign adapter to the recyclerView
@@ -72,7 +72,7 @@ class NotesFragment : Fragment() {
 
         //TODO: remove later
         binding.addNewNote.setOnLongClickListener {
-            noteViewModel.clearNotes()
+            noteViewModel.clearNotesFromJournal(args.journalId)
             true
         }
 

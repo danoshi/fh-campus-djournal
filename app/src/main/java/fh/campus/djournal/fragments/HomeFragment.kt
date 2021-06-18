@@ -1,6 +1,7 @@
 package fh.campus.djournal.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import fh.campus.djournal.R
 import fh.campus.djournal.adapters.JournalListAdapter
 import fh.campus.djournal.database.AppDatabase
@@ -22,6 +26,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var journalViewModel: JournalViewModel
     private lateinit var viewModelFactory: JournalViewModelFactory
+    private lateinit var auth: FirebaseAuth
 
 
     override fun onCreateView(
@@ -63,6 +68,12 @@ class HomeFragment : Fragment() {
         binding.addNewJournal.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCreateNewJournalFragment())
         }
+
+        auth = Firebase.auth
+
+        val user = auth.uid
+        Log.i("AAAA", user.toString())
+
 
         return binding.root
     }

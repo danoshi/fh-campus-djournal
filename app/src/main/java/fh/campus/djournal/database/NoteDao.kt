@@ -20,6 +20,9 @@ interface NoteDao {
     @Query("DELETE FROM note_table")
     suspend fun clear()
 
+    @Query("DELETE FROM note_table WHERE journalIdOfNote = :id")
+    suspend fun clearNotesFromJournal(id: Long)
+
     @Query("SELECT * FROM note_table ORDER BY noteId DESC LIMIT 1")
     fun getNote(): Note
 

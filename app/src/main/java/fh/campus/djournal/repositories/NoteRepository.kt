@@ -12,6 +12,7 @@ class NoteRepository(private val noteDao: NoteDao) {
     suspend fun updateNote(note: Note) = noteDao.update(note)
     suspend fun deleteNote(note: Note) = noteDao.delete(note)
     suspend fun clearNotes() = noteDao.clear()
+    suspend fun clearNotesFromJournal(journalId: Long) = noteDao.clearNotesFromJournal(journalId)
     fun getAllNotes(): LiveData<List<Note>> = noteDao.getAll()
     fun getNotesFromJournal(journalId: Long): LiveData<List<Note>> = noteDao.getNotesFromJournal(journalId)
 
