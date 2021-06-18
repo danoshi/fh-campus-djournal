@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="12.12.1212"
+                android:text="@{note.timestamp}"
                 android:textAlignment="center" />
         </LinearLayout>
 

@@ -16,8 +16,11 @@ import fh.campus.djournal.databinding.FragmentNotesBinding
 import fh.campus.djournal.models.Note
 import fh.campus.djournal.repositories.NoteRepository
 import fh.campus.djournal.utils.NoteStore
+import fh.campus.djournal.utils.Util
 import fh.campus.djournal.viewmodels.NoteViewModel
 import fh.campus.djournal.viewmodels.NoteViewModelFactory
+import java.text.SimpleDateFormat
+import java.util.*
 
 class NotesFragment : Fragment() {
     private lateinit var binding: FragmentNotesBinding
@@ -63,7 +66,7 @@ class NotesFragment : Fragment() {
         )
 
         binding.addNewNote.setOnClickListener {
-            val note = Note(Math.random().toString(), args.journalId, "this is my testitest note")
+            val note = Note(Math.random().toString(), args.journalId, "this is my testitest note", Util().getDateTime())
             noteViewModel.addNote(note)
         }
 
@@ -73,10 +76,9 @@ class NotesFragment : Fragment() {
             true
         }
 
-        Log.i("aaa", args.journalId.toString())
-
 
         return binding.root
     }
+
 
 }
