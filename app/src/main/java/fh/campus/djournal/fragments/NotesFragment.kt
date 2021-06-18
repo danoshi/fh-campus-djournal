@@ -1,7 +1,6 @@
 package fh.campus.djournal.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,12 +14,11 @@ import fh.campus.djournal.database.AppDatabase
 import fh.campus.djournal.databinding.FragmentNotesBinding
 import fh.campus.djournal.models.Note
 import fh.campus.djournal.repositories.NoteRepository
-import fh.campus.djournal.utils.NoteStore
+import fh.campus.djournal.utils.NoteDialogs
+import fh.campus.djournal.utils.ToastMaker
 import fh.campus.djournal.utils.Util
 import fh.campus.djournal.viewmodels.NoteViewModel
 import fh.campus.djournal.viewmodels.NoteViewModelFactory
-import java.text.SimpleDateFormat
-import java.util.*
 
 class NotesFragment : Fragment() {
     private lateinit var binding: FragmentNotesBinding
@@ -49,10 +47,12 @@ class NotesFragment : Fragment() {
                 this, viewModelFactory
             ).get(NoteViewModel::class.java)
 
+        val dialog = NoteDialogs(requireContext(), noteViewModel)
 
         val adapter = NoteListAdapter(
             dataSet = listOf(),
-            onNoteItemClicked = { note -> }
+            onNoteItemShortClicked = { note -> ToastMaker().toastMaker(requireContext(), "NOT YET IMPLEMENTED")},
+            onNoteItemLongClicked = { note -> dialog.noteOptionDialog(note)},
         )    // instantiate a new MovieListAdapter for recyclerView
         binding.noteList.adapter = adapter // assign adapter to the recyclerView
 

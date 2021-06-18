@@ -13,7 +13,7 @@ import fh.campus.djournal.R
 import fh.campus.djournal.adapters.JournalListAdapter
 import fh.campus.djournal.database.AppDatabase
 import fh.campus.djournal.databinding.FragmentHomeBinding
-import fh.campus.djournal.utils.Dialogs
+import fh.campus.djournal.utils.JournalDialogs
 import fh.campus.djournal.repositories.JournalRepository
 import fh.campus.djournal.viewmodels.JournalViewModel
 import fh.campus.djournal.viewmodels.JournalViewModelFactory
@@ -44,7 +44,7 @@ class HomeFragment : Fragment() {
                 this, viewModelFactory
             ).get(JournalViewModel::class.java)
 
-        val dialog = Dialogs(requireContext(), journalViewModel)
+        val dialog = JournalDialogs(requireContext(), journalViewModel)
 
         val adapter = JournalListAdapter(
             dataSet = listOf(),     // start with empty list

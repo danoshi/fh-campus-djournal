@@ -10,7 +10,8 @@ import fh.campus.djournal.models.Note
 
 class NoteListAdapter (
     private var dataSet: List<Note>,
-    val onNoteItemClicked: (Note) -> Unit,
+    val onNoteItemShortClicked: (Note) -> Unit,
+    val onNoteItemLongClicked: (Note) -> Unit,
 ) :
     RecyclerView.Adapter<NoteListAdapter.ViewHolder>(){
 
@@ -22,6 +23,17 @@ class NoteListAdapter (
     inner class ViewHolder(private val binding: NoteItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
+            binding.noteItem.setOnLongClickListener {
+                binding.note?.let { note ->
+                    onNoteItemLongClicked(note)
+                }
+                true
+            }
+            binding.noteItem.setOnClickListener {
+                binding.note?.let { note ->
+                    onNoteItemShortClicked(note)
+                }
+            }
         }
 
         fun bind(noteItem: Note) {

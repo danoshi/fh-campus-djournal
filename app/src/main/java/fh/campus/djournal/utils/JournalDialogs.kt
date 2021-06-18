@@ -8,7 +8,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import fh.campus.djournal.models.Journal
 import fh.campus.djournal.viewmodels.JournalViewModel
 
-class Dialogs(private val context: Context, private val journalViewModel: JournalViewModel) {
+class JournalDialogs(private val context: Context, private val journalViewModel: JournalViewModel) {
     private var newTitle = ""
     private var newDescription = ""
 
