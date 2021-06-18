@@ -1,6 +1,7 @@
 package fh.campus.djournal.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -75,6 +76,13 @@ class NotesFragment : Fragment() {
             noteViewModel.clearNotesFromJournal(args.journalId)
             true
         }
+
+        noteViewModel.notes.observe(
+            viewLifecycleOwner, Observer { note ->
+                Log.i("NOTES", note.toString())
+            }
+        )
+
 
 
         return binding.root

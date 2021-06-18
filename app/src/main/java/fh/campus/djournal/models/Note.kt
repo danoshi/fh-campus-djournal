@@ -2,19 +2,19 @@ package fh.campus.djournal.models
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import java.util.*
 
-//@Entity(
-//    tableName = "note_table",
-//    foreignKeys = [ForeignKey(
-//        entity = Journal::class,
-//        parentColumns = arrayOf("noteId"),
-//        childColumns = arrayOf("journalId"),
-//        onDelete = ForeignKey.CASCADE
-//    )]
-//)
-@Entity(tableName = "note_table")
+@Entity(
+    tableName = "note_table",
+    foreignKeys = [ForeignKey(
+        entity = Journal::class,
+        parentColumns = arrayOf("journalId"),
+        childColumns = arrayOf("journalIdOfNote"),
+        onDelete = ForeignKey.CASCADE
+    )]
+)
 data class Note(
     @ColumnInfo(name = "title")
     var name: String = "",

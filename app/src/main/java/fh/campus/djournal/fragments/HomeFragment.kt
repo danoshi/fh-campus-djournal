@@ -71,6 +71,7 @@ class HomeFragment : Fragment() {
 
         auth = Firebase.auth
 
+        // TODO: Delete later
         val user = auth.uid
         Log.i("AAAA", user.toString())
 
