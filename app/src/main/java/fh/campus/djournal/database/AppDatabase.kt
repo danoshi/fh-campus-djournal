@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import fh.campus.djournal.models.Journal
 import fh.campus.djournal.models.Note
 
-@Database(entities = arrayOf(Journal::class, Note::class), version = 3, exportSchema = false)
+@Database(entities = arrayOf(Journal::class, Note::class), version = 4, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract val journalDao: JournalDao
     abstract val noteDao: NoteDao

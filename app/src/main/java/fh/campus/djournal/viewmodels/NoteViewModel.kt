@@ -8,10 +8,11 @@ import fh.campus.djournal.repositories.NoteRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class NoteViewModel (
+class NoteViewModel(
     private val repository: NoteRepository,
-) : ViewModel(){
+) : ViewModel() {
     val notes: LiveData<List<Note>> = repository.getAllNotes()
+
 
     fun addNote(note: Note) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -35,6 +36,10 @@ class NoteViewModel (
         viewModelScope.launch(Dispatchers.IO) {
             repository.clearNotes()
         }
+    }
+
+    fun getNotesFromJournal(journalId: Long): LiveData<List<Note>> {
+        return repository.getNotesFromJournal(journalId)
     }
 
 }

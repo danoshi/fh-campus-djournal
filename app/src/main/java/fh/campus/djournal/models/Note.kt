@@ -14,9 +14,9 @@ import java.time.format.DateTimeFormatter
 //@Entity(
 //    tableName = "note_table",
 //    foreignKeys = [ForeignKey(
-//        entity = Note::class,
-//        parentColumns = arrayOf("id"),
-//        childColumns = arrayOf("id"),
+//        entity = Journal::class,
+//        parentColumns = arrayOf("noteId"),
+//        childColumns = arrayOf("journalId"),
 //        onDelete = ForeignKey.CASCADE
 //    )]
 //)
@@ -24,11 +24,12 @@ import java.time.format.DateTimeFormatter
 data class Note(
     @ColumnInfo(name = "title")
     var name: String = "",
-    @PrimaryKey(autoGenerate = true)
-    var id: Long = 0L,
+    var journalIdOfNote: Long = 0L,
     @ColumnInfo(name = "text")
     var text: String = ""
 ) {
+    @PrimaryKey(autoGenerate = true)
+    var noteId: Long = 0L
 
 //    TODO: look how this works with room
 //    @RequiresApi(Build.VERSION_CODES.O)

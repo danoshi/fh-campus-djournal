@@ -1,6 +1,7 @@
 package fh.campus.djournal.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,16 +35,6 @@ class NotesFragment : Fragment() {
 
         val args = NotesFragmentArgs.fromBundle(requireArguments())
 
-//
-//        when(val movieEntry = NoteStore().findMovieByUUID(args.movieId)){
-//            null -> {
-//                Toast.makeText(requireContext(), "Could not load movie data", Toast.LENGTH_SHORT).show()
-//                findNavController().navigateUp()
-//            }
-//            else -> binding.movie = movieEntry
-//        }
-
-
         val application = requireNotNull(this.activity).application
 
         val dataSource = AppDatabase.getDatabase(application).noteDao
@@ -58,23 +49,32 @@ class NotesFragment : Fragment() {
 
         val adapter = NoteListAdapter(
             dataSet = listOf(),
-            onNoteItemClicked = { note ->  }
+            onNoteItemClicked = { note -> }
         )    // instantiate a new MovieListAdapter for recyclerView
         binding.noteList.adapter = adapter // assign adapter to the recyclerView
 
         binding.lifecycleOwner = this
         binding.noteTrackerViewModel = noteViewModel
 
-        noteViewModel.notes.observe(
-            viewLifecycleOwner,
-            Observer { notes -> adapter.updateDataSet(notes) })
+        noteViewModel.getNotesFromJournal(args.journalId).observe(
+            viewLifecycleOwner, Observer { note ->
+                adapter.updateDataSet(note)
+            }
+        )
 
         binding.addNewNote.setOnClickListener {
-            noteViewModel.addNote(NoteStore().defaultNotes[0])
-            noteViewModel.addNote(NoteStore().defaultNotes[1])
-            noteViewModel.addNote(NoteStore().defaultNotes[2])
-            noteViewModel.addNote(NoteStore().defaultNotes[3])
+            val note = Note(Math.random().toString(), args.journalId, "this is my testitest note")
+            noteViewModel.addNote(note)
         }
+
+        //TODO: remove later
+        binding.addNewNote.setOnLongClickListener {
+            noteViewModel.clearNotes()
+            true
+        }
+
+        Log.i("aaa", args.journalId.toString())
+
 
         return binding.root
     }

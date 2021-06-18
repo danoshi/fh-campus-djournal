@@ -49,7 +49,7 @@ class HomeFragment : Fragment() {
         val adapter = JournalListAdapter(
             dataSet = listOf(),     // start with empty list
             onJournalItemLongClicked = { journal -> dialog.journalOptionDialog(journal) },
-            onJournalItemShortClicked = { journal ->  findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNotesFragment(journal.id))}
+            onJournalItemShortClicked = { journal ->  findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNotesFragment(journal.journalId))}
         )    // instantiate a new MovieListAdapter for recyclerView
         binding.journalList.adapter = adapter // assign adapter to the recyclerView
 
