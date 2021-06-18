@@ -1,24 +1,23 @@
 package fh.campus.djournal.fragments
 
-import android.app.AlertDialog
 import android.os.Bundle
-import android.text.InputType
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import fh.campus.djournal.R
 import fh.campus.djournal.adapters.JournalListAdapter
 import fh.campus.djournal.database.AppDatabase
 import fh.campus.djournal.databinding.FragmentHomeBinding
-import fh.campus.djournal.models.Journal
-import fh.campus.djournal.repositories.Dialogs
+import fh.campus.djournal.utils.JournalDialogs
 import fh.campus.djournal.repositories.JournalRepository
 import fh.campus.djournal.viewmodels.JournalViewModel
 import fh.campus.djournal.viewmodels.JournalViewModelFactory
@@ -27,6 +26,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var journalViewModel: JournalViewModel
     private lateinit var viewModelFactory: JournalViewModelFactory
+    private lateinit var auth: FirebaseAuth
 
 
     override fun onCreateView(
@@ -49,11 +49,12 @@ class HomeFragment : Fragment() {
                 this, viewModelFactory
             ).get(JournalViewModel::class.java)
 
-        val dialog = Dialogs(requireContext(), journalViewModel)
+        val dialog = JournalDialogs(requireContext(), journalViewModel)
 
         val adapter = JournalListAdapter(
             dataSet = listOf(),     // start with empty list
-            onJournalItemClicked = { journal -> dialog.journalOptionDialog(journal) }
+            onJournalItemLongClicked = { journal -> dialog.journalOptionDialog(journal) },
+            onJournalItemShortClicked = { journal ->  findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNotesFragment(journal.journalId))}
         )    // instantiate a new MovieListAdapter for recyclerView
         binding.journalList.adapter = adapter // assign adapter to the recyclerView
 
@@ -67,6 +68,13 @@ class HomeFragment : Fragment() {
         binding.addNewJournal.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCreateNewJournalFragment())
         }
+
+        auth = Firebase.auth
+
+        // TODO: Delete later
+        val user = auth.uid
+        Log.i("AAAA", user.toString())
+
 
         return binding.root
     }

@@ -3,6 +3,8 @@ package fh.campus.djournal.database
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import fh.campus.djournal.models.Journal
+import fh.campus.djournal.models.JournalWithNotes
+import fh.campus.djournal.models.Note
 
 @Dao
 interface JournalDao {
@@ -19,9 +21,10 @@ interface JournalDao {
     @Query("DELETE FROM journal_table")
     suspend fun clear()
 
-    @Query("SELECT * FROM journal_table ORDER BY id DESC LIMIT 1")
+    @Query("SELECT * FROM journal_table ORDER BY journalId DESC LIMIT 1")
     fun getJournal(): Journal
 
-    @Query("SELECT * FROM journal_table ORDER BY id DESC")
+    @Query("SELECT * FROM journal_table ORDER BY journalId DESC")
     fun getAll(): LiveData<List<Journal>>
+
 }

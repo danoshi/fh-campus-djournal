@@ -1,9 +1,6 @@
 package fh.campus.djournal.models
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
+import androidx.room.*
 
 
 @Entity(tableName = "journal_table")
@@ -12,10 +9,8 @@ data class Journal(
     var title: String = "",
     @ColumnInfo(name = "description")
     var description: String = "",
-) {
     @PrimaryKey(autoGenerate = true)
-    var id: Long = 0L
-
+    var journalId: Long = 0L,
     @Ignore
     var color: Int = 0
-}
+)

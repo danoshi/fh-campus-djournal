@@ -1,16 +1,29 @@
 package fh.campus.djournal.models
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import java.sql.Timestamp
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
+import java.util.*
 
+@Entity(
+    tableName = "note_table",
+    foreignKeys = [ForeignKey(
+        entity = Journal::class,
+        parentColumns = arrayOf("journalId"),
+        childColumns = arrayOf("journalIdOfNote"),
+        onDelete = ForeignKey.CASCADE
+    )]
+)
 data class Note(
-    var name: String = ""
+    @ColumnInfo(name = "title")
+    var name: String = "",
+    var journalIdOfNote: Long = 0L,
+    @ColumnInfo(name = "text")
+    var text: String = "",
+    @ColumnInfo(name = "timestamp")
+    val timestamp: String = ""
 ) {
-    var id: Long = 0L
-    @RequiresApi(Build.VERSION_CODES.O)
-    val timestamp = Timestamp.valueOf(LocalDateTime.now().toString())
+    @PrimaryKey(autoGenerate = true)
+    var noteId: Long = 0L
 }
