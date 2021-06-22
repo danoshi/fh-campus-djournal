@@ -78,8 +78,6 @@ class HomeFragment : Fragment() {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCreateNewJournalFragment())
         }
 
-
-//<<<<<<< HEAD
         setHasOptionsMenu(true)
 
         return binding.root
@@ -95,8 +93,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun reload() {
-//=======
-//>>>>>>> 62574c91f53622bd17592fbce0e6e01c38eb1dde
 
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -105,23 +101,9 @@ class HomeFragment : Fragment() {
                 || super.onOptionsItemSelected(item)
     }
 
-
-//<<<<<<< HEAD
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.options_menu, menu)
-    }
-//=======
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        super.onCreateOptionsMenu(menu, inflater)
-//        inflater.inflate(R.menu.options_menu, menu)
-//    }
-//
-//    // TODO: with Loging implemented the back button does not work!
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        Log.i("optionsmenu", journalsToLog.toString())
-//        return true || super.onOptionsItemSelected(item)
-//    }
-//>>>>>>> 62574c91f53622bd17592fbce0e6e01c38eb1dde
 
+    }
 }
