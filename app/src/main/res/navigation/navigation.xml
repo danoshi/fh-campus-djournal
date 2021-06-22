@@ -16,7 +16,6 @@
             app:popUpTo="@id/homeFragment" />
         <action
             android:id="@+id/action_homeFragment_to_notesFragment"
-<<<<<<< HEAD
             app:destination="@id/notesFragment" />
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
@@ -32,10 +31,7 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="false" />
-=======
-            app:destination="@id/notesFragment"
-            app:popUpTo="@id/homeFragment" />
->>>>>>> 62574c91f53622bd17592fbce0e6e01c38eb1dde
+
     </fragment>
     <fragment
         android:id="@+id/createNewJournalFragment"
