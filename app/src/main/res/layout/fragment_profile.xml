@@ -91,20 +91,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintVertical_bias="0.895" />
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="43dp"
-                android:layout_height="37dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                app:layout_constraintBottom_toBottomOf="@+id/buttonLogout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.084"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView5"
-                app:layout_constraintVertical_bias="0.03"
-                app:srcCompat="@drawable/ic_baseline_account_circle_24" />
-
             <Button
                 android:id="@+id/buttonChangeProfile"
                 android:layout_width="match_parent"
