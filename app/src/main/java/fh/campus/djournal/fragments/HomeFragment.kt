@@ -2,14 +2,14 @@ package fh.campus.djournal.fragments
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -69,7 +69,8 @@ class HomeFragment : Fragment() {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCreateNewJournalFragment())
         }
 
-        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToProfileFragment())
+
+        setHasOptionsMenu(true)
 
         return binding.root
     }
@@ -85,6 +86,17 @@ class HomeFragment : Fragment() {
 
     private fun reload() {
 
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return NavigationUI.
+        onNavDestinationSelected(item, requireView().findNavController())
+                || super.onOptionsItemSelected(item)
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.options_menu, menu)
     }
 
 }
