@@ -7,7 +7,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -34,7 +36,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-
+        auth = Firebase.auth
         setHasOptionsMenu(true) // enable the options menu in the action bar
 
 
@@ -76,21 +78,32 @@ class HomeFragment : Fragment() {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCreateNewJournalFragment())
         }
 
-        auth = Firebase.auth
-
+        setHasOptionsMenu(true)
 
         return binding.root
     }
+    override fun onStart() {
+        super.onStart()
+        val currentUser = auth.currentUser
+        val user = auth.uid
+        Log.i("Users_UUID:", user.toString())
+        if(currentUser != null){
+            reload()
+        }
+    }
 
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        super.onCreateOptionsMenu(menu, inflater)
-//        inflater.inflate(R.menu.options_menu, menu)
-//    }
-//
-//    // TODO: with Loging implemented the back button does not work!
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        Log.i("optionsmenu", journalsToLog.toString())
-//        return true || super.onOptionsItemSelected(item)
-//    }
+    private fun reload() {
 
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return NavigationUI.
+        onNavDestinationSelected(item, requireView().findNavController())
+                || super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.options_menu, menu)
+
+    }
 }
