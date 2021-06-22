@@ -25,8 +25,10 @@ class UsersCollection {
         documentReference.get().addOnCompleteListener(onCompleteListener!!)
     }
 
-    fun getUserDocumentOf(documentSnapshot: DocumentSnapshot): UsersDocument {
-        return UsersDocument()
-
+    fun getUserDocumentOf(documentSnapshot: DocumentSnapshot): UsersDocument? {
+        val firestore = FirebaseFirestore.getInstance()
+        val documentReference = firestore.collection(COLLECTION_NAME).document(EMAIL_FIELD)
+        return UsersDocument(email = documentReference.toString())
     }
+
 }

@@ -18,7 +18,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
 import fh.campus.djournal.R
 import fh.campus.djournal.activities.LoginActivity
@@ -171,10 +170,12 @@ class ProfileFragment : Fragment() {
                 val document: DocumentSnapshot? = task.getResult()
                 if (document != null) {
                     if (document.exists()) {
-                        val usersDocument: UsersDocument = UsersCollection().getUserDocumentOf(
+                        val usersDocument: UsersDocument? = UsersCollection().getUserDocumentOf(
                             document
                         )
-                        binding.textEmail.text = usersDocument.email
+                        if (usersDocument != null) {
+                            binding.textEmail.text = usersDocument.email
+                        }
                         binding.loadingPanel.visibility = View.GONE
                     }
                 }

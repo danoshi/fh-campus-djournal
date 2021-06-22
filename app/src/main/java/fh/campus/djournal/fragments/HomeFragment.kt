@@ -17,6 +17,7 @@ import fh.campus.djournal.R
 import fh.campus.djournal.adapters.JournalListAdapter
 import fh.campus.djournal.database.AppDatabase
 import fh.campus.djournal.databinding.FragmentHomeBinding
+import fh.campus.djournal.models.Journal
 import fh.campus.djournal.utils.JournalDialogs
 import fh.campus.djournal.repositories.JournalRepository
 import fh.campus.djournal.viewmodels.JournalViewModel
@@ -27,6 +28,7 @@ class HomeFragment : Fragment() {
     private lateinit var journalViewModel: JournalViewModel
     private lateinit var viewModelFactory: JournalViewModelFactory
     private lateinit var auth: FirebaseAuth
+    private lateinit var journalsToLog: List<Journal>
 
 
     override fun onCreateView(
@@ -54,7 +56,11 @@ class HomeFragment : Fragment() {
         val adapter = JournalListAdapter(
             dataSet = listOf(),     // start with empty list
             onJournalItemLongClicked = { journal -> dialog.journalOptionDialog(journal) },
-            onJournalItemShortClicked = { journal ->  findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNotesFragment(journal.journalId))}
+            onJournalItemShortClicked = { journal ->
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToNotesFragment(journal.journalId)
+                )
+            }
         )    // instantiate a new MovieListAdapter for recyclerView
         binding.journalList.adapter = adapter // assign adapter to the recyclerView
 
@@ -63,13 +69,17 @@ class HomeFragment : Fragment() {
 
         journalViewModel.journals.observe(
             viewLifecycleOwner,
-            Observer { journals -> adapter.updateDataSet(journals) })
+            Observer { journals ->
+                adapter.updateDataSet(journals)
+                journalsToLog = journals
+            })
 
         binding.addNewJournal.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCreateNewJournalFragment())
         }
 
 
+//<<<<<<< HEAD
         setHasOptionsMenu(true)
 
         return binding.root
@@ -85,6 +95,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun reload() {
+//=======
+//>>>>>>> 62574c91f53622bd17592fbce0e6e01c38eb1dde
 
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -94,9 +106,22 @@ class HomeFragment : Fragment() {
     }
 
 
+//<<<<<<< HEAD
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.options_menu, menu)
     }
+//=======
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        super.onCreateOptionsMenu(menu, inflater)
+//        inflater.inflate(R.menu.options_menu, menu)
+//    }
+//
+//    // TODO: with Loging implemented the back button does not work!
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        Log.i("optionsmenu", journalsToLog.toString())
+//        return true || super.onOptionsItemSelected(item)
+//    }
+//>>>>>>> 62574c91f53622bd17592fbce0e6e01c38eb1dde
 
 }

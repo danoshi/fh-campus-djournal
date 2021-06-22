@@ -21,4 +21,7 @@
     <string name="color">Color:</string>
     <string name="notes">Notes</string>
     <string name="UserProfile">User Profile</string>
+    <string name="log_all_journals">Log all journals</string>
+    <string name="log_all_notes">Log All Notes</string>
+
 </resources>
