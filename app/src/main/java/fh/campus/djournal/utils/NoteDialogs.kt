@@ -64,5 +64,4 @@ class NoteDialogs(private val context: Context, private val noteViewModel: NoteV
         builder.show()
     }
 
-
 }

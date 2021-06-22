@@ -2,7 +2,9 @@ package fh.campus.djournal.fragments
 
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -15,7 +17,6 @@ import fh.campus.djournal.R
 import fh.campus.djournal.adapters.JournalListAdapter
 import fh.campus.djournal.database.AppDatabase
 import fh.campus.djournal.databinding.FragmentHomeBinding
-import fh.campus.djournal.models.Journal
 import fh.campus.djournal.utils.JournalDialogs
 import fh.campus.djournal.repositories.JournalRepository
 import fh.campus.djournal.viewmodels.JournalViewModel
@@ -26,7 +27,6 @@ class HomeFragment : Fragment() {
     private lateinit var journalViewModel: JournalViewModel
     private lateinit var viewModelFactory: JournalViewModelFactory
     private lateinit var auth: FirebaseAuth
-    private lateinit var journalsToLog: List<Journal>
 
 
     override fun onCreateView(
@@ -54,11 +54,7 @@ class HomeFragment : Fragment() {
         val adapter = JournalListAdapter(
             dataSet = listOf(),     // start with empty list
             onJournalItemLongClicked = { journal -> dialog.journalOptionDialog(journal) },
-            onJournalItemShortClicked = { journal ->
-                findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToNotesFragment(journal.journalId)
-                )
-            }
+            onJournalItemShortClicked = { journal ->  findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNotesFragment(journal.journalId))}
         )    // instantiate a new MovieListAdapter for recyclerView
         binding.journalList.adapter = adapter // assign adapter to the recyclerView
 
@@ -67,10 +63,7 @@ class HomeFragment : Fragment() {
 
         journalViewModel.journals.observe(
             viewLifecycleOwner,
-            Observer { journals ->
-                adapter.updateDataSet(journals)
-                journalsToLog = journals
-            })
+            Observer { journals -> adapter.updateDataSet(journals) })
 
         binding.addNewJournal.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCreateNewJournalFragment())
@@ -78,19 +71,13 @@ class HomeFragment : Fragment() {
 
         auth = Firebase.auth
 
+        // TODO: Delete later
+        val user = auth.uid
+        Log.i("AAAA", user.toString())
+
 
         return binding.root
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        super.onCreateOptionsMenu(menu, inflater)
-//        inflater.inflate(R.menu.options_menu, menu)
-//    }
-//
-//    // TODO: with Loging implemented the back button does not work!
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        Log.i("optionsmenu", journalsToLog.toString())
-//        return true || super.onOptionsItemSelected(item)
-//    }
 
 }
