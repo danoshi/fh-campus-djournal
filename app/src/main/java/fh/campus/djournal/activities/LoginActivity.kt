@@ -62,7 +62,6 @@ class LoginActivity : AppCompatActivity() {
             }
             else if (!(emailAddress.text.toString().isEmpty() && password.text.toString().isEmpty())) {
                 signIn(emailAddress.text.toString(), password.text.toString())
-                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
             }
         }
     }
@@ -75,6 +74,8 @@ class LoginActivity : AppCompatActivity() {
                     Log.d("SignIn", "signInWithEmail:success")
                     val user = auth.currentUser
                     updateUI(user)
+                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("Sign In", "signInWithEmail:failure", task.exception)

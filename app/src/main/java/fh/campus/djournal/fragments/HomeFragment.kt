@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-
+        auth = Firebase.auth
         setHasOptionsMenu(true) // enable the options menu in the action bar
 
 
@@ -69,15 +69,22 @@ class HomeFragment : Fragment() {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCreateNewJournalFragment())
         }
 
-        auth = Firebase.auth
-
-        // TODO: Delete later
-        val user = auth.uid
-        Log.i("AAAA", user.toString())
-
+        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToProfileFragment())
 
         return binding.root
     }
+    override fun onStart() {
+        super.onStart()
+        val currentUser = auth.currentUser
+        val user = auth.uid
+        Log.i("Users_UUID:", user.toString())
+        if(currentUser != null){
+            reload()
+        }
+    }
 
+    private fun reload() {
+
+    }
 
 }
