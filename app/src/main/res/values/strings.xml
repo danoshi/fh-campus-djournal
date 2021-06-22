@@ -20,5 +20,10 @@
     <string name="description">Description:</string>
     <string name="color">Color:</string>
     <string name="notes">Notes</string>
+<<<<<<< HEAD
     <string name="UserProfile">User Profile</string>
+=======
+    <string name="log_all_journals">Log all journals</string>
+    <string name="log_all_notes">Log All Notes</string>
+>>>>>>> 62574c91f53622bd17592fbce0e6e01c38eb1dde
 </resources>

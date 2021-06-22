@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+<<<<<<< HEAD
     <item
         android:id="@+id/profileFragment"
         android:title="@string/UserProfile" />
 
+=======
+
+    <item
+        android:id="@+id/logAllJournals"
+        android:title="@string/log_all_journals" />
+    <item
+        android:id="@+id/logAllNotes"
+        android:title="@string/log_all_notes" />
+>>>>>>> 62574c91f53622bd17592fbce0e6e01c38eb1dde
 </menu>
