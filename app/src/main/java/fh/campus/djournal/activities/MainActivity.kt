@@ -1,10 +1,6 @@
 package fh.campus.djournal.activities
 
 import android.os.Bundle
-import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
@@ -29,12 +25,10 @@ class MainActivity : AppCompatActivity() {
         navController = this.findNavController(R.id.navhostFragment)
         // setup the action bar/top menu with our navController
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
-
+        NavigationUI.setupWithNavController(binding.navView, navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = this.findNavController(R.id.navhostFragment)
-        return navController.navigateUp()
+        return NavigationUI.navigateUp(navController, drawerLayout)
     }
-
 }

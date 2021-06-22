@@ -2,12 +2,13 @@ package fh.campus.djournal.fragments
 
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import fh.campus.djournal.R
 import fh.campus.djournal.adapters.NoteListAdapter
 import fh.campus.djournal.database.AppDatabase
@@ -15,6 +16,8 @@ import fh.campus.djournal.databinding.FragmentNotesBinding
 import fh.campus.djournal.models.Note
 import fh.campus.djournal.repositories.NoteRepository
 import fh.campus.djournal.utils.NoteDialogs
+import fh.campus.djournal.utils.ToastMaker
+import fh.campus.djournal.utils.Util
 import fh.campus.djournal.viewmodels.NoteViewModel
 import fh.campus.djournal.viewmodels.NoteViewModelFactory
 
@@ -22,7 +25,6 @@ class NotesFragment : Fragment() {
     private lateinit var binding: FragmentNotesBinding
     private lateinit var noteViewModel: NoteViewModel
     private lateinit var viewModelFactory: NoteViewModelFactory
-    private lateinit var notesToLog: List<Note>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,8 +52,8 @@ class NotesFragment : Fragment() {
 
         val adapter = NoteListAdapter(
             dataSet = listOf(),
-            onNoteItemShortClicked = { note -> findNavController().navigate(NotesFragmentDirections.actionNotesFragmentToNoteDetailFragment(note.noteId))},
-            onNoteItemLongClicked = { note -> dialog.noteOptionDialog(note) },
+            onNoteItemShortClicked = { note -> },
+            onNoteItemLongClicked = { note -> dialog.noteOptionDialog(note)},
         )    // instantiate a new MovieListAdapter for recyclerView
         binding.noteList.adapter = adapter // assign adapter to the recyclerView
 
@@ -61,14 +63,12 @@ class NotesFragment : Fragment() {
         noteViewModel.getNotesFromJournal(args.journalId).observe(
             viewLifecycleOwner, Observer { note ->
                 adapter.updateDataSet(note)
-                notesToLog = note
             }
         )
 
         binding.addNewNote.setOnClickListener {
-            findNavController().navigate(NotesFragmentDirections.actionNotesFragmentToNewNoteFragment(args.journalId))
-//            val note = Note(Math.random().toString(), args.journalId, "this is my testitest note", Util().getDateTime())
-//            noteViewModel.addNote(note)
+            val note = Note(Math.random().toString(), args.journalId, "this is my testitest note", Util().getDateTime())
+            noteViewModel.addNote(note)
         }
 
         //TODO: remove later
@@ -86,17 +86,6 @@ class NotesFragment : Fragment() {
 
 
         return binding.root
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.options_menu, menu)
-    }
-
-    // TODO: with Loging implemented the back button does not work!
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Log.i("optionsmenu", notesToLog.toString())
-        return true || super.onOptionsItemSelected(item)
     }
 
 

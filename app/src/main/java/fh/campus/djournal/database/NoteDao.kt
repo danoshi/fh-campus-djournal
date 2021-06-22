@@ -8,7 +8,7 @@ import fh.campus.djournal.models.Note
 @Dao
 interface NoteDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun createNote(note: Note): Long
 
     @Update
@@ -23,8 +23,8 @@ interface NoteDao {
     @Query("DELETE FROM note_table WHERE journalIdOfNote = :id")
     suspend fun clearNotesFromJournal(id: Long)
 
-    @Query("SELECT * FROM note_table WHERE noteId = :id")
-    fun getNoteById(id: Long): LiveData<Note>
+    @Query("SELECT * FROM note_table ORDER BY noteId DESC LIMIT 1")
+    fun getNote(): Note
 
     @Query("SELECT * FROM note_table ORDER BY noteId DESC")
     fun getAll(): LiveData<List<Note>>
