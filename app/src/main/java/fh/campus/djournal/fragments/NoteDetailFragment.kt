@@ -1,6 +1,7 @@
 package fh.campus.djournal.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -19,7 +20,7 @@ import fh.campus.djournal.models.Note
 import fh.campus.djournal.repositories.NoteRepository
 import fh.campus.djournal.viewmodels.NoteViewModel
 import fh.campus.djournal.viewmodels.NoteViewModelFactory
-import jp.wasabeef.richeditor.RichEditor;
+import jp.wasabeef.richeditor.RichEditor
 
 class NoteDetailFragment : Fragment() {
     private lateinit var binding: FragmentNoteDetailBinding
@@ -37,6 +38,17 @@ class NoteDetailFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_note_detail, container, false)
 
         setHasOptionsMenu(true)
+
+        mEditor = binding.editor
+        Log.i("backbutton", binding.editor.)
+        mEditor.setEditorHeight(200);
+        mEditor.setEditorFontSize(22);
+        mEditor.setPadding(10, 10, 10, 10);
+        mEditor.setPlaceholder("Insert text here...");
+        var mPreview = binding.noteDetailText
+
+        mEditor.setOnTextChangeListener { text -> mPreview.setText(text) }
+
 
         val application = requireNotNull(this.activity).application
         val args = NoteDetailFragmentArgs.fromBundle(requireArguments())
@@ -73,6 +85,11 @@ class NoteDetailFragment : Fragment() {
 
         }
 
+
+        binding.actionBold.setOnClickListener {
+            Log.i("backbutton", binding.editor.toString())
+        }
+
         return binding.root
     }
 
@@ -80,12 +97,12 @@ class NoteDetailFragment : Fragment() {
         return when (item.itemId) {
             //TODO: normaly it should be R.id.***
             16908332 -> {
-                saveNoteDialog(
-                    noteObj,
-                    binding.noteDetailName.text.toString(),
-                    binding.noteDetailText.text.toString(),
-                    journalId
-                )
+//                saveNoteDialog(
+//                    noteObj,
+//                    binding.noteDetailName.text.toString(),
+//                    binding.noteDetailText.text.toString(),
+//                    journalId
+//                )
                 true
             }
             else -> super.onOptionsItemSelected(item)
