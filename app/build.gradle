@@ -43,6 +43,9 @@ android {
 }
 
 dependencies {
+    // richTexteditor https://github.com/wasabeef/richeditor-android
+    implementation 'jp.wasabeef:richeditor-android:2.0.0'
+
     // navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"

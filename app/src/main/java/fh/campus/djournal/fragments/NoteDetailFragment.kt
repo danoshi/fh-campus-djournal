@@ -19,6 +19,7 @@ import fh.campus.djournal.models.Note
 import fh.campus.djournal.repositories.NoteRepository
 import fh.campus.djournal.viewmodels.NoteViewModel
 import fh.campus.djournal.viewmodels.NoteViewModelFactory
+import jp.wasabeef.richeditor.RichEditor;
 
 class NoteDetailFragment : Fragment() {
     private lateinit var binding: FragmentNoteDetailBinding
@@ -26,6 +27,7 @@ class NoteDetailFragment : Fragment() {
     private lateinit var noteViewModel: NoteViewModel
     private var journalId: Long = 0
     private lateinit var noteObj: Note
+    private lateinit var mEditor: RichEditor
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
