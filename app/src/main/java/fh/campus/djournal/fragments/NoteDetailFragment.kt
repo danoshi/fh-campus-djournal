@@ -2,6 +2,7 @@ package fh.campus.djournal.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
@@ -73,24 +74,28 @@ class NoteDetailFragment : Fragment() {
         return binding.root
     }
 
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        Log.i("updateNote", binding.noteDetailName.text.toString())
-//        Log.i("updateNote", binding.noteDetailText.text.toString())
-//        saveNoteDialog(
-//        )
-//
-//        return true
-//        return NavigationUI.onNavDestinationSelected(
-//            item!!,
-//            requireView().findNavController()
-//        )
-//                || super.onOptionsItemSelected(item)
-//    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            //TODO: normaly it should be R.id.***
+            16908332 -> {
+                saveNoteDialog(
+                    noteObj,
+                    binding.noteDetailName.text.toString(),
+                    binding.noteDetailText.text.toString(),
+                    journalId
+                )
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+
+    }
+
 
 
     private fun saveNoteDialog(
         noteObj: Note,
-        newNoteName: String = "default title",
+        newNoteName: String,
         newNoteText: String,
         journalId: Long,
     ) {

@@ -31,12 +31,12 @@
                 android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                tools:text="Lorem Ipsum"
                 app:layout_constraintEnd_toStartOf="@+id/noteDetailDate"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Lorem Ipsum" />
 
             <TextView
                 android:id="@+id/noteDetailDate"
@@ -46,8 +46,8 @@
                 app:layout_constraintBaseline_toBaselineOf="@+id/noteDetailName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                tools:text="Lorem Ipsum"
-                app:layout_constraintStart_toEndOf="@+id/noteDetailName" />
+                app:layout_constraintStart_toEndOf="@+id/noteDetailName"
+                tools:text="Lorem Ipsum" />
 
             <EditText
                 android:id="@+id/noteDetailText"
@@ -58,14 +58,6 @@
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
                 app:layout_constraintTop_toBottomOf="@+id/noteDetailName" />
-
-            <Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Button"
-                app:layout_constraintTop_toBottomOf="@+id/noteDetailText" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
