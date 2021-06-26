@@ -1,5 +1,6 @@
 package fh.campus.djournal.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -13,6 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.azeesoft.lib.colorpicker.ColorPickerDialog
+import com.azeesoft.lib.colorpicker.ColorPickerDialog.OnColorPickedListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import fh.campus.djournal.R
 import fh.campus.djournal.database.AppDatabase
@@ -83,6 +86,7 @@ class NoteDetailFragment : Fragment() {
 
         }
 
+
         val items = listOf("arial", "serif", "monospace", "cursive")
         val adapter = ArrayAdapter(requireContext(), R.layout.font_item, items)
         (binding.menu.editText as? AutoCompleteTextView)?.setAdapter(adapter)
@@ -130,6 +134,15 @@ class NoteDetailFragment : Fragment() {
 
         binding.actionAlignCenter.setOnClickListener {
             mEditor.setAlignCenter()
+        }
+
+        val colorPickerDialog = ColorPickerDialog.createColorPickerDialog(requireContext())
+        colorPickerDialog.setOnColorPickedListener(OnColorPickedListener { color, hexVal ->
+            mEditor.setTextColor(color)
+        })
+
+        binding.actionTxtColor.setOnClickListener {
+            colorPickerDialog.show()
         }
 
         binding.actionInsertBullets.setOnClickListener {
