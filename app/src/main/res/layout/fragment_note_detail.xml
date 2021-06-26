@@ -11,16 +11,129 @@
             type="fh.campus.djournal.viewmodels.NoteViewModel" />
     </data>
 
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@android:color/black">
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/menu"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:hint="fonts">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/fontOptions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <ImageButton
+                    android:id="@+id/action_bold"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@null"
+                    android:contentDescription="@null"
+                    android:src="@drawable/bold" />
+
+                <ImageButton
+                    android:id="@+id/action_italic"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@null"
+                    android:contentDescription="@null"
+                    android:src="@drawable/italic" />
+
+
+                <ImageButton
+                    android:id="@+id/action_underline"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@null"
+                    android:contentDescription="@null"
+                    android:src="@drawable/underline" />
+
+
+
+                <ImageButton
+                    android:id="@+id/action_txt_color"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@null"
+                    android:contentDescription="@null"
+                    android:src="@drawable/txt_color" />
+
+                <ImageButton
+                    android:id="@+id/action_align_left"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@null"
+                    android:contentDescription="@null"
+                    android:src="@drawable/justify_left" />
+
+                <ImageButton
+                    android:id="@+id/action_align_center"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@null"
+                    android:contentDescription="@null"
+                    android:src="@drawable/justify_center" />
+
+                <ImageButton
+                    android:id="@+id/action_align_right"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@null"
+                    android:contentDescription="@null"
+                    android:src="@drawable/justify_right" />
+
+                <ImageButton
+                    android:id="@+id/action_insert_bullets"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@null"
+                    android:contentDescription="@null"
+                    android:src="@drawable/bullets" />
+
+                <ImageButton
+                    android:id="@+id/action_insert_numbers"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@null"
+                    android:contentDescription="@null"
+                    android:src="@drawable/numbers" />
+
+                <ImageButton
+                    android:id="@+id/action_insert_image"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@null"
+                    android:contentDescription="@null"
+                    android:src="@drawable/insert_image" />
+
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/noteDetailName"
@@ -30,6 +143,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
                 android:ems="10"
+                android:fontFamily="sans-serif"
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toStartOf="@+id/noteDetailDate"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -49,18 +163,13 @@
                 app:layout_constraintStart_toEndOf="@+id/noteDetailName"
                 tools:text="Lorem Ipsum" />
 
-            <EditText
-                android:id="@+id/noteDetailText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_large"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                app:layout_constraintTop_toBottomOf="@+id/noteDetailName" />
+        </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+        <jp.wasabeef.richeditor.RichEditor
+            android:id="@+id/editor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 
 </layout>

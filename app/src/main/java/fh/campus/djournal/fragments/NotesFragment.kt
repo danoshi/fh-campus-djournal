@@ -7,7 +7,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import fh.campus.djournal.R
 import fh.campus.djournal.adapters.NoteListAdapter
 import fh.campus.djournal.database.AppDatabase
@@ -50,7 +52,14 @@ class NotesFragment : Fragment() {
 
         val adapter = NoteListAdapter(
             dataSet = listOf(),
-            onNoteItemShortClicked = { note -> findNavController().navigate(NotesFragmentDirections.actionNotesFragmentToNoteDetailFragment(note.noteId))},
+            onNoteItemShortClicked = { note ->
+                findNavController().navigate(
+                    NotesFragmentDirections.actionNotesFragmentToNoteDetailFragment(
+                        note.noteId,
+                        note.journalIdOfNote
+                    )
+                )
+            },
             onNoteItemLongClicked = { note -> dialog.noteOptionDialog(note) },
         )    // instantiate a new MovieListAdapter for recyclerView
         binding.noteList.adapter = adapter // assign adapter to the recyclerView
@@ -66,7 +75,13 @@ class NotesFragment : Fragment() {
         )
 
         binding.addNewNote.setOnClickListener {
-            findNavController().navigate(NotesFragmentDirections.actionNotesFragmentToNewNoteFragment(args.journalId))
+            findNavController().navigate(
+                NotesFragmentDirections.actionNotesFragmentToNoteDetailFragment(
+                    -1L,
+                    args.journalId
+                )
+            )
+//            findNavController().navigate(NotesFragmentDirections.actionNotesFragmentToNewNoteFragment(args.journalId))
 //            val note = Note(Math.random().toString(), args.journalId, "this is my testitest note", Util().getDateTime())
 //            noteViewModel.addNote(note)
         }
@@ -77,13 +92,6 @@ class NotesFragment : Fragment() {
             true
         }
 
-        noteViewModel.notes.observe(
-            viewLifecycleOwner, Observer { note ->
-                Log.i("NOTES", note.toString())
-            }
-        )
-
-
 
         return binding.root
     }
@@ -93,10 +101,9 @@ class NotesFragment : Fragment() {
         inflater.inflate(R.menu.options_menu, menu)
     }
 
-    // TODO: with Loging implemented the back button does not work!
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Log.i("optionsmenu", notesToLog.toString())
-        return true || super.onOptionsItemSelected(item)
+        return NavigationUI.onNavDestinationSelected(item, requireView().findNavController())
+                || super.onOptionsItemSelected(item)
     }
 
 

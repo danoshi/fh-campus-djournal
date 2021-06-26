@@ -9,6 +9,10 @@ buildscript {
     repositories {
         google()
         jcenter()
+        mavenCentral()
+        maven {
+            url 'https://dl.bintray.com/azeesoft/maven'
+        }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.2"
@@ -25,6 +29,10 @@ allprojects {
     repositories {
         google()
         jcenter()
+        mavenCentral()
+        maven {
+            url 'https://dl.bintray.com/azeesoft/maven'
+        }
     }
 }
 

@@ -57,10 +57,6 @@
             android:id="@+id/action_notesFragment_to_noteDetailFragment"
             app:destination="@id/noteDetailFragment"
             app:popUpTo="@id/notesFragment" />
-        <action
-            android:id="@+id/action_notesFragment_to_newNoteFragment"
-            app:destination="@id/newNoteFragment"
-            app:popUpTo="@id/notesFragment" />
     </fragment>
     <fragment
         android:id="@+id/noteDetailFragment"
@@ -72,19 +68,10 @@
             app:argType="long" />
         <action
             android:id="@+id/action_noteDetailFragment_to_notesFragment"
-            app:destination="@id/notesFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/newNoteFragment"
-        android:name="fh.campus.djournal.fragments.NewNoteFragment"
-        android:label="New Note"
-        tools:layout="@layout/fragment_new_note" >
+            app:destination="@id/notesFragment"
+            app:popUpTo="@id/notesFragment" />
         <argument
             android:name="journalId"
             app:argType="long" />
-        <action
-            android:id="@+id/action_newNoteFragment_to_notesFragment"
-            app:destination="@id/notesFragment"
-            app:popUpTo="@id/notesFragment" />
     </fragment>
 </navigation>
