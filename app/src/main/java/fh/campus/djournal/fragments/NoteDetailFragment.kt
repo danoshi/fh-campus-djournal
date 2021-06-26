@@ -1,14 +1,13 @@
 package fh.campus.djournal.fragments
 
 import android.os.Bundle
-import android.util.Log
-import android.util.Log.INFO
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.activity.addCallback
-import androidx.core.text.toSpannable
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -20,11 +19,10 @@ import fh.campus.djournal.database.AppDatabase
 import fh.campus.djournal.databinding.FragmentNoteDetailBinding
 import fh.campus.djournal.models.Note
 import fh.campus.djournal.repositories.NoteRepository
-import fh.campus.djournal.utils.ToastMaker
 import fh.campus.djournal.viewmodels.NoteViewModel
 import fh.campus.djournal.viewmodels.NoteViewModelFactory
 import jp.wasabeef.richeditor.RichEditor
-import java.util.logging.Level.INFO
+
 
 class NoteDetailFragment : Fragment() {
     private lateinit var binding: FragmentNoteDetailBinding
@@ -79,26 +77,35 @@ class NoteDetailFragment : Fragment() {
             saveNoteDialog(
                 noteObj,
                 binding.noteDetailName.text.toString(),
-                mEditor.html,
+                mEditor.html!!,
                 journalId,
             )
 
         }
 
-        val spannable = binding.noteDetailText
-        val a = spannable.selectionStart
-        val b = spannable.selectionEnd
+        val items = listOf("arial", "serif", "monospace", "cursive")
+        val adapter = ArrayAdapter(requireContext(), R.layout.font_item, items)
+        (binding.menu.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 
-        binding.btn.setOnClickListener {
-            ToastMaker().toastMaker(requireContext(), spannable.length().toString())
-        }
+        val preview = binding.log
 
-        binding.btn2.setOnClickListener {
-            ToastMaker().toastMaker(requireContext(), spannable.selectionStart.toString())
-        }
+        mEditor.setOnTextChangeListener { text -> preview.setText(text) }
 
-        binding.btn3.setOnClickListener {
-            ToastMaker().toastMaker(requireContext(), spannable.selectionEnd.toString())
+        binding.fontOptions.setOnItemClickListener { parent, view, position, id ->
+            when (id) {
+                0L -> {
+                    changeFont("arial", mEditor.html)
+                }
+                1L -> {
+                    changeFont("serif", mEditor.html)
+                }
+                2L -> {
+                    changeFont("monospace", mEditor.html)
+                }
+                3L -> {
+                    changeFont("cursive", mEditor.html)
+                }
+            }
         }
 
         binding.actionBold.setOnClickListener {
@@ -125,18 +132,6 @@ class NoteDetailFragment : Fragment() {
             mEditor.setAlignCenter()
         }
 
-        binding.actionHeading1.setOnClickListener {
-            mEditor.setHeading(1)
-        }
-
-        binding.actionHeading2.setOnClickListener {
-            mEditor.setHeading(2)
-        }
-
-        binding.actionHeading3.setOnClickListener {
-            mEditor.setHeading(3)
-        }
-
         binding.actionInsertBullets.setOnClickListener {
             mEditor.setBullets()
         }
@@ -155,7 +150,7 @@ class NoteDetailFragment : Fragment() {
                 saveNoteDialog(
                     noteObj,
                     binding.noteDetailName.text.toString(),
-                    mEditor.html,
+                    mEditor.html!!,
                     journalId
                 )
                 true
@@ -180,12 +175,16 @@ class NoteDetailFragment : Fragment() {
                 noteObj.text = newNoteText
                 noteViewModel.updateNote(noteObj)
                 findNavController().navigate(
-                    NoteDetailFragmentDirections.actionNoteDetailFragmentToNotesFragment(journalId)
+                    NoteDetailFragmentDirections.actionNoteDetailFragmentToNotesFragment(
+                        journalId
+                    )
                 )
             }
             .setNegativeButton("DON'T SAVE") { dialog, which ->
                 findNavController().navigate(
-                    NoteDetailFragmentDirections.actionNoteDetailFragmentToNotesFragment(journalId)
+                    NoteDetailFragmentDirections.actionNoteDetailFragmentToNotesFragment(
+                        journalId
+                    )
                 )
             }
             .setNeutralButton("CANCEL") { dialog, which ->
@@ -194,4 +193,26 @@ class NoteDetailFragment : Fragment() {
             .show()
 
     }
+
+    private fun trimmText(text: String): String {
+        val endTag = "</font>"
+        val textWithoutEndTag = text.dropLast(endTag.length)
+        return textWithoutEndTag.substringAfter(">")
+    }
+
+    private fun changeFont(font: String, text: String) {
+        val fontTag = "<font face='${font}'>"
+        val endTag = "</font>"
+        if (mEditor.html.contains(font)) {
+            val newText = trimmText(mEditor.html)
+            mEditor.html = newText
+        } else if (mEditor.html.contains("font")) {
+            val newText = trimmText(mEditor.html)
+            mEditor.html = fontTag + newText + endTag
+        } else {
+            val newText = fontTag + text + endTag
+            mEditor.html = newText
+        }
+    }
+
 }

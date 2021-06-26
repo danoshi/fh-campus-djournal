@@ -26,6 +26,23 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/menu"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:hint="fonts">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/fontOptions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
                 <ImageButton
                     android:id="@+id/action_bold"
                     android:layout_width="48dp"
@@ -51,29 +68,6 @@
                     android:contentDescription="@null"
                     android:src="@drawable/underline" />
 
-                <ImageButton
-                    android:id="@+id/action_heading1"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@null"
-                    android:contentDescription="@null"
-                    android:src="@drawable/h1" />
-
-                <ImageButton
-                    android:id="@+id/action_heading2"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@null"
-                    android:contentDescription="@null"
-                    android:src="@drawable/h2" />
-
-                <ImageButton
-                    android:id="@+id/action_heading3"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@null"
-                    android:contentDescription="@null"
-                    android:src="@drawable/h3" />
 
 
                 <ImageButton
@@ -158,6 +152,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
                 android:ems="10"
+                android:fontFamily="sans-serif"
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toStartOf="@+id/noteDetailDate"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -184,16 +179,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-
-        <EditText
-            android:id="@+id/noteDetailText"
+        <TextView
+            android:id="@+id/log"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_large"
-            android:ems="10"
-            android:gravity="start|top"
-            android:inputType="textMultiLine"
-            app:layout_constraintTop_toBottomOf="@+id/noteDetailName" />
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
