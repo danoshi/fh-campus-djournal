@@ -3,10 +3,4 @@
     <item
         android:id="@+id/profileFragment"
         android:title="@string/UserProfile" />
-    <item
-        android:id="@+id/logAllJournals"
-        android:title="@string/log_all_journals" />
-    <item
-        android:id="@+id/logAllNotes"
-        android:title="@string/log_all_notes" />
 </menu>
