@@ -1,6 +1,5 @@
 package fh.campus.djournal.fragments
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -22,6 +21,7 @@ import fh.campus.djournal.database.AppDatabase
 import fh.campus.djournal.databinding.FragmentNoteDetailBinding
 import fh.campus.djournal.models.Note
 import fh.campus.djournal.repositories.NoteRepository
+import fh.campus.djournal.utils.Util
 import fh.campus.djournal.viewmodels.NoteViewModel
 import fh.campus.djournal.viewmodels.NoteViewModelFactory
 import jp.wasabeef.richeditor.RichEditor
@@ -31,7 +31,8 @@ class NoteDetailFragment : Fragment() {
     private lateinit var binding: FragmentNoteDetailBinding
     private lateinit var viewModelFactory: NoteViewModelFactory
     private lateinit var noteViewModel: NoteViewModel
-    private var journalId: Long = 0
+    private var journalId: Long = 0L
+    private var noteId: Long = 0L
     private lateinit var noteObj: Note
     private lateinit var mEditor: RichEditor
 
@@ -52,6 +53,8 @@ class NoteDetailFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
         val args = NoteDetailFragmentArgs.fromBundle(requireArguments())
+        noteId = args.noteId
+        journalId = args.journalId
 
         val dataSource = AppDatabase.getDatabase(application).noteDao
         val repository = NoteRepository.getInstance(dataSource)
@@ -63,27 +66,35 @@ class NoteDetailFragment : Fragment() {
             ).get(NoteViewModel::class.java)
 
 
-        noteViewModel.getNoteById(args.noteId).observe(
-            viewLifecycleOwner, Observer { note ->
-                noteObj = note
-                binding.noteDetailName.setText(note.name)
-                binding.noteDetailDate.text = note.timestamp
-                mEditor.html = note.text
+        if (!noteId.equals(-1L)) {
+            noteViewModel.getNoteById(args.noteId).observe(
+                viewLifecycleOwner, Observer { note ->
+                    noteObj = note
+                    binding.noteDetailName.setText(note.name)
+                    binding.noteDetailDate.text = note.timestamp
+                    mEditor.html = note.text
 //                binding.noteDetailText.setText(note.text)
-                journalId = note.journalIdOfNote
+                    journalId = note.journalIdOfNote
 
-            }
-        )
-
+                }
+            )
+        }
 
         requireActivity().onBackPressedDispatcher.addCallback(this) {
-            saveNoteDialog(
-                noteObj,
-                binding.noteDetailName.text.toString(),
-                mEditor.html!!,
-                journalId,
-            )
-
+            if (noteId.equals(-1L)) {
+                saveNewNoteDialog(
+                    binding.noteDetailName.text.toString(),
+                    mEditor.html!!,
+                    journalId,
+                )
+            } else {
+                saveNoteDialog(
+                    noteObj,
+                    binding.noteDetailName.text.toString(),
+                    mEditor.html!!,
+                    journalId,
+                )
+            }
         }
 
 
@@ -91,9 +102,6 @@ class NoteDetailFragment : Fragment() {
         val adapter = ArrayAdapter(requireContext(), R.layout.font_item, items)
         (binding.menu.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 
-        val preview = binding.log
-
-        mEditor.setOnTextChangeListener { text -> preview.setText(text) }
 
         binding.fontOptions.setOnItemClickListener { parent, view, position, id ->
             when (id) {
@@ -160,12 +168,30 @@ class NoteDetailFragment : Fragment() {
         return when (item.itemId) {
             //TODO: normaly it should be R.id.***
             16908332 -> {
-                saveNoteDialog(
-                    noteObj,
-                    binding.noteDetailName.text.toString(),
-                    mEditor.html!!,
-                    journalId
-                )
+                when {
+                    mEditor.html == null -> {
+                        findNavController().navigate(
+                            NoteDetailFragmentDirections.actionNoteDetailFragmentToNotesFragment(
+                                journalId
+                            )
+                        )
+                    }
+                    noteId.equals(-1L) -> {
+                        saveNewNoteDialog(
+                            binding.noteDetailName.text.toString(),
+                            mEditor.html!!,
+                            journalId,
+                        )
+                    }
+                    else -> {
+                        saveNoteDialog(
+                            noteObj,
+                            binding.noteDetailName.text.toString(),
+                            mEditor.html!!,
+                            journalId,
+                        )
+                    }
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -184,9 +210,51 @@ class NoteDetailFragment : Fragment() {
             .setTitle("SAVE NOTE")
             .setMessage("Do you want to save your changes")
             .setPositiveButton("CONFIRM") { dialog, which ->
-                noteObj.name = newNoteName
-                noteObj.text = newNoteText
-                noteViewModel.updateNote(noteObj)
+                if (noteObj.timestamp.equals("")) {
+                    noteViewModel.addNote(
+                        Note(
+                            newNoteName,
+                            journalId,
+                            newNoteText,
+                            Util().getDateTime()
+                        )
+                    )
+                } else {
+                    noteObj.name = newNoteName
+                    noteObj.text = newNoteText
+                    noteViewModel.updateNote(noteObj)
+                }
+                findNavController().navigate(
+                    NoteDetailFragmentDirections.actionNoteDetailFragmentToNotesFragment(
+                        journalId
+                    )
+                )
+            }
+            .setNegativeButton("DON'T SAVE") { dialog, which ->
+                findNavController().navigate(
+                    NoteDetailFragmentDirections.actionNoteDetailFragmentToNotesFragment(
+                        journalId
+                    )
+                )
+            }
+            .setNeutralButton("CANCEL") { dialog, which ->
+                dialog.cancel()
+            }
+            .show()
+
+    }
+
+    private fun saveNewNoteDialog(
+        newNoteName: String,
+        newNoteText: String = "",
+        journalId: Long,
+    ) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("SAVE NOTE")
+            .setMessage("Do you want to save your changes")
+            .setPositiveButton("CONFIRM") { dialog, which ->
+                val newNote = Note(newNoteName, journalId, newNoteText, Util().getDateTime())
+                noteViewModel.addNote(newNote)
                 findNavController().navigate(
                     NoteDetailFragmentDirections.actionNoteDetailFragmentToNotesFragment(
                         journalId

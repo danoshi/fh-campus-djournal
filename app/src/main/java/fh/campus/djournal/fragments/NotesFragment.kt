@@ -50,7 +50,7 @@ class NotesFragment : Fragment() {
 
         val adapter = NoteListAdapter(
             dataSet = listOf(),
-            onNoteItemShortClicked = { note -> findNavController().navigate(NotesFragmentDirections.actionNotesFragmentToNoteDetailFragment(note.noteId))},
+            onNoteItemShortClicked = { note -> findNavController().navigate(NotesFragmentDirections.actionNotesFragmentToNoteDetailFragment(note.noteId, note.journalIdOfNote))},
             onNoteItemLongClicked = { note -> dialog.noteOptionDialog(note) },
         )    // instantiate a new MovieListAdapter for recyclerView
         binding.noteList.adapter = adapter // assign adapter to the recyclerView
@@ -66,7 +66,8 @@ class NotesFragment : Fragment() {
         )
 
         binding.addNewNote.setOnClickListener {
-            findNavController().navigate(NotesFragmentDirections.actionNotesFragmentToNewNoteFragment(args.journalId))
+            findNavController().navigate(NotesFragmentDirections.actionNotesFragmentToNoteDetailFragment(-1L, args.journalId))
+//            findNavController().navigate(NotesFragmentDirections.actionNotesFragmentToNewNoteFragment(args.journalId))
 //            val note = Note(Math.random().toString(), args.journalId, "this is my testitest note", Util().getDateTime())
 //            noteViewModel.addNote(note)
         }
