@@ -48,7 +48,6 @@ class CreateNewJournalFragment : Fragment() {
         binding.btnCreate.setOnClickListener {
             val title = binding.editTextNewJournalName.text.toString()
             val description = binding.editTextNewJournalDescription.text.toString()
-            val color = binding.editTextNewJournalColor.text.toString()
             if (title.isEmpty() && description.isEmpty()) {
                 binding.editTextNewJournalName.setError("Please Enter a Name")
                 binding.editTextNewJournalDescription.setError("Please Enter a Description")

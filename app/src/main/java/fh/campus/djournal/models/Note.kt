@@ -22,7 +22,9 @@ data class Note(
     @ColumnInfo(name = "text")
     var text: String = "",
     @ColumnInfo(name = "timestamp")
-    val timestamp: String = ""
+    val timestamp: String = "",
+    @ColumnInfo(name = "layout")
+    var layout: String = ""
 ) {
     @PrimaryKey(autoGenerate = true)
     var noteId: Long = 0L
