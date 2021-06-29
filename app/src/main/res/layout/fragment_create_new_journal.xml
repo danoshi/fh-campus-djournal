@@ -65,26 +65,6 @@
             android:hint="@string/enter_journal_description"
             android:inputType="textPersonName" />
 
-        <TextView
-            android:id="@+id/editTextColorLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:layout_marginRight="@dimen/margin_medium"
-            android:text="@string/color" />
-
-        <EditText
-            android:id="@+id/editTextNewJournalColor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_medium"
-            android:layout_marginRight="@dimen/margin_medium"
-            android:autofillHints="@string/enter_journal_color"
-            android:ems="10"
-            android:hint="@string/enter_journal_color"
-            android:inputType="textPersonName" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

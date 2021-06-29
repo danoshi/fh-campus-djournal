@@ -11,6 +11,4 @@ data class Journal(
     var description: String = "",
     @PrimaryKey(autoGenerate = true)
     var journalId: Long = 0L,
-    @Ignore
-    var color: Int = 0
 )

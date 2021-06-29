@@ -1,5 +1,8 @@
 package fh.campus.djournal.fragments
 
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -8,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.activity.addCallback
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -21,6 +25,7 @@ import fh.campus.djournal.database.AppDatabase
 import fh.campus.djournal.databinding.FragmentNoteDetailBinding
 import fh.campus.djournal.models.Note
 import fh.campus.djournal.repositories.NoteRepository
+import fh.campus.djournal.utils.ToastMaker
 import fh.campus.djournal.utils.Util
 import fh.campus.djournal.viewmodels.NoteViewModel
 import fh.campus.djournal.viewmodels.NoteViewModelFactory
@@ -35,6 +40,7 @@ class NoteDetailFragment : Fragment() {
     private var noteId: Long = 0L
     private lateinit var noteObj: Note
     private lateinit var mEditor: RichEditor
+    private var layout = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,9 +52,9 @@ class NoteDetailFragment : Fragment() {
         setHasOptionsMenu(true)
 
         mEditor = binding.editor
-        mEditor.setEditorHeight(200);
-        mEditor.setEditorFontSize(22);
-        mEditor.setPadding(10, 10, 10, 10);
+        mEditor.setEditorHeight(500)
+        mEditor.setEditorFontSize(22)
+        mEditor.setPadding(10, 10, 10, 10)
 
 
         val application = requireNotNull(this.activity).application
@@ -73,9 +79,8 @@ class NoteDetailFragment : Fragment() {
                     binding.noteDetailName.setText(note.name)
                     binding.noteDetailDate.text = note.timestamp
                     mEditor.html = note.text
-//                binding.noteDetailText.setText(note.text)
                     journalId = note.journalIdOfNote
-
+                    mEditor.setBackground(copyDrawable(note.layout))
                 }
             )
         }
@@ -86,6 +91,7 @@ class NoteDetailFragment : Fragment() {
                     binding.noteDetailName.text.toString(),
                     mEditor.html!!,
                     journalId,
+                    layout
                 )
             } else {
                 saveNoteDialog(
@@ -93,14 +99,43 @@ class NoteDetailFragment : Fragment() {
                     binding.noteDetailName.text.toString(),
                     mEditor.html!!,
                     journalId,
+                    layout
                 )
             }
         }
 
+        val layoutItems = listOf("line", "square", "default")
+        val layoutAdapter = ArrayAdapter(requireContext(), R.layout.layout_item, layoutItems)
+        (binding.layoutMenu.editText as? AutoCompleteTextView)?.setAdapter(layoutAdapter)
 
-        val items = listOf("arial", "serif", "monospace", "cursive")
-        val adapter = ArrayAdapter(requireContext(), R.layout.font_item, items)
-        (binding.menu.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+
+        binding.layoutOptions.setOnItemClickListener { parent, view, position, id ->
+            when (id) {
+                0L -> {
+                    if (layout != "line") {
+                        val l = copyDrawable("line")
+                        mEditor.setBackground(l)
+                        layout = "line"
+                    }
+                }
+                1L -> {
+                    if (layout != "square") {
+                        val s = copyDrawable("square")
+                        mEditor.setBackground(s)
+                        layout = "square"
+                    }
+                }
+                2L -> {
+                    mEditor.setBackground("")
+                    layout = ""
+                }
+            }
+        }
+
+
+        val fontItems = listOf("arial", "serif", "monospace", "cursive")
+        val fontAdapter = ArrayAdapter(requireContext(), R.layout.font_item, fontItems)
+        (binding.menu.editText as? AutoCompleteTextView)?.setAdapter(fontAdapter)
 
 
         binding.fontOptions.setOnItemClickListener { parent, view, position, id ->
@@ -181,6 +216,7 @@ class NoteDetailFragment : Fragment() {
                             binding.noteDetailName.text.toString(),
                             mEditor.html!!,
                             journalId,
+                            layout
                         )
                     }
                     else -> {
@@ -189,6 +225,7 @@ class NoteDetailFragment : Fragment() {
                             binding.noteDetailName.text.toString(),
                             mEditor.html!!,
                             journalId,
+                            layout
                         )
                     }
                 }
@@ -205,25 +242,16 @@ class NoteDetailFragment : Fragment() {
         newNoteName: String,
         newNoteText: String,
         journalId: Long,
+        layout: String
     ) {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("SAVE NOTE")
             .setMessage("Do you want to save your changes")
             .setPositiveButton("CONFIRM") { dialog, which ->
-                if (noteObj.timestamp.equals("")) {
-                    noteViewModel.addNote(
-                        Note(
-                            newNoteName,
-                            journalId,
-                            newNoteText,
-                            Util().getDateTime()
-                        )
-                    )
-                } else {
-                    noteObj.name = newNoteName
-                    noteObj.text = newNoteText
-                    noteViewModel.updateNote(noteObj)
-                }
+                noteObj.name = newNoteName
+                noteObj.text = newNoteText
+                noteObj.layout = layout
+                noteViewModel.updateNote(noteObj)
                 findNavController().navigate(
                     NoteDetailFragmentDirections.actionNoteDetailFragmentToNotesFragment(
                         journalId
@@ -248,12 +276,14 @@ class NoteDetailFragment : Fragment() {
         newNoteName: String,
         newNoteText: String = "",
         journalId: Long,
+        layout: String
     ) {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("SAVE NOTE")
             .setMessage("Do you want to save your changes")
             .setPositiveButton("CONFIRM") { dialog, which ->
-                val newNote = Note(newNoteName, journalId, newNoteText, Util().getDateTime())
+                val newNote =
+                    Note(newNoteName, journalId, newNoteText, Util().getDateTime(), layout)
                 noteViewModel.addNote(newNote)
                 findNavController().navigate(
                     NoteDetailFragmentDirections.actionNoteDetailFragmentToNotesFragment(
@@ -284,16 +314,39 @@ class NoteDetailFragment : Fragment() {
     private fun changeFont(font: String, text: String) {
         val fontTag = "<font face='${font}'>"
         val endTag = "</font>"
-        if (mEditor.html.contains(font)) {
-            val newText = trimmText(mEditor.html)
-            mEditor.html = newText
-        } else if (mEditor.html.contains("font")) {
-            val newText = trimmText(mEditor.html)
-            mEditor.html = fontTag + newText + endTag
-        } else {
-            val newText = fontTag + text + endTag
-            mEditor.html = newText
+        when {
+            mEditor.html.contains(font) -> {
+                val newText = trimmText(mEditor.html)
+                mEditor.html = newText
+            }
+            mEditor.html.contains("font") -> {
+                val newText = trimmText(mEditor.html)
+                mEditor.html = fontTag + newText + endTag
+            }
+            else -> {
+                val newText = fontTag + text + endTag
+                mEditor.html = newText
+            }
         }
+    }
+
+    private fun copyDrawable(layout: String): Drawable? {
+        var drawable: Drawable? = AppCompatResources.getDrawable(requireContext(), R.drawable.blank)
+        when (layout) {
+            "line" -> {
+                val bmp1 = BitmapFactory.decodeResource(resources, R.drawable.line)
+                val copy = bmp1.copy(bmp1.config, true)
+                drawable = BitmapDrawable(copy)
+                return drawable
+            }
+            "square" -> {
+                val bmp1 = BitmapFactory.decodeResource(resources, R.drawable.square)
+                val copy = bmp1.copy(bmp1.config, true)
+                drawable = BitmapDrawable(copy)
+                return drawable
+            }
+        }
+        return drawable
     }
 
 }
