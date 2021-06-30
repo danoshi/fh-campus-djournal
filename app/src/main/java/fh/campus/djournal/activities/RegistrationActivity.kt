@@ -81,22 +81,28 @@ class RegistrationActivity : AppCompatActivity() {
             }
     }
     private fun sendEmailVerification() {
-        val user = auth.currentUser!!
-        user.sendEmailVerification()
-            .addOnSuccessListener {
-                Toast.makeText(
-                    this@RegistrationActivity,
-                    "Verification email has been sent",
-                    Toast.LENGTH_SHORT
-                ).show() }
-            .addOnFailureListener {
-                Log.d(
-                    "Email",
-                    "onFailure: Email not sent" + Toast.makeText(
+        try {
+            val user = auth.currentUser!!
+            user.sendEmailVerification()
+                .addOnSuccessListener {
+                    Toast.makeText(
                         this@RegistrationActivity,
-                        "Verfication email have could not be sent",
+                        "Verification email has been sent",
                         Toast.LENGTH_SHORT
-                    ).show()) }
+                    ).show() }
+                .addOnFailureListener {
+                    Log.d(
+                        "Email",
+                        "onFailure: Email not sent" + Toast.makeText(
+                            this@RegistrationActivity,
+                            "Verfication email have could not be sent",
+                            Toast.LENGTH_SHORT
+                        ).show()) }
+        }catch (e: NullPointerException){
+            print(e)
+            Toast.makeText(this, "the provided email does not exist", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     private fun switchToSignIn(){

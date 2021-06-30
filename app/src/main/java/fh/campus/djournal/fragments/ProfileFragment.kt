@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,16 +14,16 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.app
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import fh.campus.djournal.R
 import fh.campus.djournal.activities.LoginActivity
-import fh.campus.djournal.collections.users.UsersCollection
-import fh.campus.djournal.collections.users.UsersDocument
 import fh.campus.djournal.databinding.FragmentProfileBinding
 import javax.annotation.Nullable
 
@@ -42,12 +43,12 @@ class ProfileFragment : Fragment() {
         storage = FirebaseStorage.getInstance()
         var storageRef = storage.reference
 
-
-        setUserInfo()
         setButtonsListeners()
         setEmailNotVerifiedButton()
         resetPasswordButton()
         changeProfileImage()
+        deleteAcc()
+        changeEmail()
 
         //Load picture when starting Profile fragment
         var profileRef = storageRef.child(
@@ -59,6 +60,70 @@ class ProfileFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+
+    private fun deleteAcc(){
+        binding.buttonDeleteAcc.setOnClickListener {
+            val text = EditText(context)
+            val deleteAccDialog = AlertDialog.Builder(context)
+            deleteAccDialog.setTitle("Delete account")
+            deleteAccDialog.setMessage("Are you sure you want to delete your account?")
+            deleteAccDialog.setView(text)
+            deleteAccDialog.setPositiveButton(
+                "Yes"
+            ) { dialog, which ->
+                val user = auth.currentUser!!
+                user.delete().addOnSuccessListener {
+                    FirebaseAuth.getInstance().signOut()
+                    val intent = Intent(activity, LoginActivity::class.java)
+                    startActivity(intent)
+                    Toast.makeText(
+                        context,
+                        "Delete Account successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                    .addOnFailureListener{
+                        Toast.makeText(context, "Delete account failed", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            deleteAccDialog.setNegativeButton(
+                "No"
+            ) { dialog, which -> }
+            deleteAccDialog.create().show()
+        }
+
+    }
+
+    private fun changeEmail(){
+        binding.buttonChangeEmail.setOnClickListener {
+            val newEmail = EditText(context)
+            val newEmailDialog = AlertDialog.Builder(context)
+            newEmailDialog.setTitle("New Email")
+            newEmailDialog.setMessage("Enter your new email")
+            newEmailDialog.setView(newEmail)
+            newEmailDialog.setPositiveButton(
+                "Yes"
+            ) { dialog, which ->
+                val user = auth.currentUser
+                user!!.updateEmail(newEmail.text.toString()).addOnSuccessListener {
+                    Log.d("User", "Updates correctly")
+                    Toast.makeText(context, "Your email is updated", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                    .addOnFailureListener {
+                        Log.d("User", "Failed")
+                        Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                    }
+            newEmailDialog.setNegativeButton(
+                "No"
+            ) { dialog, which -> }
+            newEmailDialog.create().show()
+        }
     }
 
     private fun changeProfileImage(){
@@ -132,7 +197,6 @@ class ProfileFragment : Fragment() {
         val user = auth.currentUser
         if (user != null) {
             if (!user.isEmailVerified) {
-                binding.textViewNotVerified.visibility = View.VISIBLE
                 binding.buttonResendCode.visibility = View.VISIBLE
                 binding.buttonResendCode.setOnClickListener { v ->
                     user.sendEmailVerification()
@@ -162,36 +226,5 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
         }
     }
-
-    private fun setUserInfo() {
-        showLoadingCircle()
-        UsersCollection().getCurrentUser { task ->
-            if (task.isSuccessful()) {
-                val document: DocumentSnapshot? = task.getResult()
-                if (document != null) {
-                    if (document.exists()) {
-                        val usersDocument: UsersDocument? = UsersCollection().getUserDocumentOf(
-                            document
-                        )
-                        if (usersDocument != null) {
-                            binding.textEmail.text = usersDocument.email
-                        }
-                        binding.loadingPanel.visibility = View.GONE
-                    }
-                }
-            }
-            hideLoadingCircle()
-        }
-    }
-
-    private fun showLoadingCircle() {
-        binding.loadingPanel.visibility = View.VISIBLE
-    }
-
-    private fun hideLoadingCircle() {
-        binding.loadingPanel.visibility = View.GONE
-    }
-
-
 
 }
