@@ -116,14 +116,6 @@
                     android:contentDescription="@null"
                     android:src="@drawable/numbers" />
 
-                <ImageButton
-                    android:id="@+id/action_insert_recording"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@null"
-                    android:contentDescription="@null"
-                    android:src="@drawable/music" />
-
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/layoutMenu"
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"

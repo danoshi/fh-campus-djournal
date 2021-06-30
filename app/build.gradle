@@ -43,6 +43,10 @@ android {
 }
 
 dependencies {
+    // floating action button speed dial https://github.com/leinardi/FloatingActionButtonSpeedDial?
+    implementation "com.leinardi.android:speed-dial:3.2.0"
+
+    // color picker https://github.com/aziztitu/AndroidPhotoshopColorPicker
     compile 'com.azeesoft.lib.colorpicker:colorpicker:1.0.8@aar'
 
     // richTexteditor https://github.com/wasabeef/richeditor-android

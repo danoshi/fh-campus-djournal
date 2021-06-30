@@ -86,21 +86,32 @@ class NoteDetailFragment : Fragment() {
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(this) {
-            if (noteId.equals(-1L)) {
-                saveNewNoteDialog(
-                    binding.noteDetailName.text.toString(),
-                    mEditor.html!!,
-                    journalId,
-                    layout
-                )
-            } else {
-                saveNoteDialog(
-                    noteObj,
-                    binding.noteDetailName.text.toString(),
-                    mEditor.html!!,
-                    journalId,
-                    layout
-                )
+            when {
+                mEditor.html == null -> {
+                    findNavController().navigate(
+                        NoteDetailFragmentDirections.actionNoteDetailFragmentToNotesFragment(
+                            journalId
+                        )
+                    )
+
+                }
+                noteId.equals(-1L) -> {
+                    saveNewNoteDialog(
+                        binding.noteDetailName.text.toString(),
+                        mEditor.html!!,
+                        journalId,
+                        layout
+                    )
+                }
+                else -> {
+                    saveNoteDialog(
+                        noteObj,
+                        binding.noteDetailName.text.toString(),
+                        mEditor.html!!,
+                        journalId,
+                        layout
+                    )
+                }
             }
         }
 
