@@ -148,8 +148,9 @@ class NotesFragment : Fragment() {
                     speedDialView.close() // To close the Speed Dial with animation
                 }
                 R.id.fab_voice_note -> {
-                    //TODO: navigate to voice note fragment
-                    ToastMaker().toastMaker(requireContext(), "AAAA")
+                    findNavController().navigate(
+                        NotesFragmentDirections.actionNotesFragmentToRecordingFragment()
+                    )
                     speedDialView.close() // To close the Speed Dial with animation
                 }
                 R.id.fab_drawing_note -> {
