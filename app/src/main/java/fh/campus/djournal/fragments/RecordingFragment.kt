@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.media.MediaRecorder
 import android.os.*
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,8 +29,9 @@ import java.util.*
 const val REQUEST_CODE = 200
 
 class RecordingFragment : Fragment(), Timer.OnTimerTickListener {
-    private lateinit var amplitudes: ArrayList<Float>
     private lateinit var binding: FragmentRecordingBinding
+
+    private lateinit var amplitudes: ArrayList<Float>
     private var permissions = arrayOf(Manifest.permission.RECORD_AUDIO)
     private var permissionGranted = false
 
@@ -63,7 +63,7 @@ class RecordingFragment : Fragment(), Timer.OnTimerTickListener {
         if (!permissionGranted)
             ActivityCompat.requestPermissions(requireActivity(), permissions, REQUEST_CODE)
 
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.bttmSheet.bottomSheet)
         bottomSheetBehavior.peekHeight = 0
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
@@ -102,12 +102,12 @@ class RecordingFragment : Fragment(), Timer.OnTimerTickListener {
             fileNameInput.setText(fileName)
         }
 
-        btnCancel.setOnClickListener {
+        binding.bttmSheet.btnCancel.setOnClickListener {
             File("$dirPath$fileName.mp3").delete()
             dismiss()
         }
 
-        btnOK.setOnClickListener {
+        binding.bttmSheet.btnOK.setOnClickListener {
             dismiss()
             save()
         }

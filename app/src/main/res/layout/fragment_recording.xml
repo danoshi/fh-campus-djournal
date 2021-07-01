@@ -79,7 +79,9 @@
             android:background="@color/opaqueBG"
             android:visibility="gone" />
 
-        <include layout="@layout/bottom_sheet" />
+        <include
+            android:id="@+id/bttmSheet"
+            layout="@layout/bottom_sheet" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
