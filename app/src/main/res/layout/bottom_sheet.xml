@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Save Record"
+            android:text="@string/save_record"
             android:textAlignment="center"
             android:textSize="26sp" />
 
@@ -25,6 +25,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/fileNameInput"
+                android:textColor="@color/greyDark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"

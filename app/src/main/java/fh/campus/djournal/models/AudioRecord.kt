@@ -2,15 +2,6 @@ package fh.campus.djournal.models
 
 import androidx.room.*
 
-//@Entity(
-//    tableName = "records_table",
-//    foreignKeys = [ForeignKey(
-//        entity = Journal::class,
-//        parentColumns = arrayOf("journalId"),
-//        childColumns = arrayOf("journalIdOfRecording"),
-//        onDelete = ForeignKey.CASCADE
-//    )]
-//)
 @Entity(tableName = "records_table")
 data class AudioRecord(
     @ColumnInfo(name = "filename")
@@ -28,6 +19,4 @@ data class AudioRecord(
 
     @PrimaryKey(autoGenerate = true)
     var recordId: Long = 0L
-    @Ignore
-    var isChecked = false
 }

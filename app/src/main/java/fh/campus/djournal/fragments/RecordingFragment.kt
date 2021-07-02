@@ -2,7 +2,6 @@ package fh.campus.djournal.fragments
 
 import android.Manifest
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaRecorder
 import android.os.*
@@ -23,19 +22,17 @@ import fh.campus.djournal.database.AppDatabase
 import fh.campus.djournal.databinding.FragmentRecordingBinding
 import fh.campus.djournal.models.AudioRecord
 import fh.campus.djournal.repositories.AudioRecordRepository
-import fh.campus.djournal.repositories.NoteRepository
 import fh.campus.djournal.utils.Timer
 import fh.campus.djournal.utils.Util
 import fh.campus.djournal.viewmodels.AudioRecordViewModel
 import fh.campus.djournal.viewmodels.AudioRecordViewModelFactory
-import fh.campus.djournal.viewmodels.NoteViewModel
-import fh.campus.djournal.viewmodels.NoteViewModelFactory
 import kotlinx.android.synthetic.main.bottom_sheet.*
 import kotlinx.android.synthetic.main.fragment_recording.*
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.ObjectOutputStream
+import java.sql.Date
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -232,7 +229,8 @@ class RecordingFragment : Fragment(), Timer.OnTimerTickListener {
         recorder = MediaRecorder()
         dirPath = "${activity?.externalCacheDir?.absolutePath}/"
 
-        var date = Util().getDateTime()
+        val simpleDateFormat = SimpleDateFormat("yyyy.MM.DD_hh.mm.ss", Locale.GERMAN)
+        val date = simpleDateFormat.format(Date())
         fileName = "audio_record_$date"
 
         recorder.apply {
