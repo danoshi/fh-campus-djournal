@@ -10,8 +10,8 @@ import fh.campus.djournal.models.AudioRecord
 
 class AudioRecordListAdapter(
     private var dataSet: List<AudioRecord>,
-//    val onNoteItemShortClicked: (AudioRecord) -> Unit,
-//    val onNoteItemLongClicked: (AudioRecord) -> Unit,
+    val onRecordItemShortClicked: (AudioRecord) -> Unit,
+    val onRecordItemLongClicked: (AudioRecord) -> Unit,
 ) :
     RecyclerView.Adapter<AudioRecordListAdapter.ViewHolder>() {
 
@@ -22,19 +22,19 @@ class AudioRecordListAdapter(
 
     inner class ViewHolder(private val binding: RecordItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-//        init {
-//            binding.noteItem.setOnLongClickListener {
-//                binding.note?.let { note ->
-//                    onNoteItemLongClicked(note)
-//                }
-//                true
-//            }
-//            binding.noteItem.setOnClickListener {
-//                binding.note?.let { note ->
-//                    onNoteItemShortClicked(note)
-//                }
-//            }
-//        }
+        init {
+            binding.recordItem.setOnLongClickListener {
+                binding.record?.let { record ->
+                    onRecordItemLongClicked(record)
+                }
+                true
+            }
+            binding.recordItem.setOnClickListener {
+                binding.record?.let { record ->
+                    onRecordItemShortClicked(record)
+                }
+            }
+        }
 
         fun bind(recordItem: AudioRecord) {
             with(binding) {

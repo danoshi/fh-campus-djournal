@@ -114,7 +114,7 @@ class NotesFragment : Fragment() {
                     .fab_voice_note, drawable
             )
                 .setFabBackgroundColor(resources.getColor(R.color.teal_200))
-                .setLabel("New Voice Note")
+                .setLabel("Voice Note")
                 .setLabelBackgroundColor(Color.TRANSPARENT)
                 .create()
         )
@@ -128,7 +128,7 @@ class NotesFragment : Fragment() {
                     .ic_draw_black_48dp
             )
                 .setFabBackgroundColor(resources.getColor(R.color.material_blue_700))
-                .setLabel("New Voice Note")
+                .setLabel("New Drawing Note")
                 .setLabelBackgroundColor(Color.TRANSPARENT)
                 .create()
         )

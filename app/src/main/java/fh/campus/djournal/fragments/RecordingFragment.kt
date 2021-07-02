@@ -232,8 +232,7 @@ class RecordingFragment : Fragment(), Timer.OnTimerTickListener {
         recorder = MediaRecorder()
         dirPath = "${activity?.externalCacheDir?.absolutePath}/"
 
-        var simpleDateFormat = SimpleDateFormat("yyyy.MM.DD_hh.mm.ss")
-        var date = simpleDateFormat.format(Date())
+        var date = Util().getDateTime()
         fileName = "audio_record_$date"
 
         recorder.apply {

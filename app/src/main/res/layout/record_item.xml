@@ -22,19 +22,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?selectableItemBackground"
-        android:clickable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="20dp"
         android:paddingStart="24dp">
 
         <ImageButton
+            android:id="@+id/btnPlay"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/ic_circle"
-            android:clickable="false"
             android:src="@drawable/ic_play" />
+
+        <ImageButton
+            android:id="@+id/pauseButton"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/ic_circle"
+            android:src="@drawable/ic_pause"
+            android:visibility="gone"
+            app:tint="@color/greyDark" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,7 +62,7 @@
                 android:id="@+id/tvMeta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{record.duration + record.timestamp}"
+                android:text="@{record.duration + ' ' + record.timestamp}"
                 android:textSize="14sp" />
 
             <CheckBox
