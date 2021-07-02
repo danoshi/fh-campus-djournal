@@ -37,6 +37,7 @@
                 android:id="@+id/recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="?attr/actionBarSize"
                 app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                 tools:layout_editor_absoluteX="19dp"
                 tools:layout_editor_absoluteY="324dp" />
@@ -62,7 +63,6 @@
             android:layout_height="match_parent"
             android:background="@color/opaqueBG"
             android:visibility="gone" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
