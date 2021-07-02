@@ -125,7 +125,7 @@ class RecordingFragment : Fragment(), Timer.OnTimerTickListener {
             stopRecording()
 
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-            bottomSheetBG.visibility = View.VISIBLE
+            binding.bottomSheetBG.visibility = View.VISIBLE
             fileNameInput.setText(fileName)
         }
 
@@ -180,12 +180,12 @@ class RecordingFragment : Fragment(), Timer.OnTimerTickListener {
     }
 
     private fun dismiss() {
-        bottomSheetBG.visibility = View.GONE
+        binding.bottomSheetBG.visibility = View.GONE
         hideKeyboard(fileNameInput)
 
         Handler(Looper.getMainLooper()).postDelayed({
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-        }, 100)
+        }, 500)
     }
 
     private fun hideKeyboard(view: View) {
