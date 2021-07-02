@@ -23,7 +23,6 @@ import fh.campus.djournal.databinding.FragmentNotesBinding
 import fh.campus.djournal.models.Note
 import fh.campus.djournal.repositories.NoteRepository
 import fh.campus.djournal.utils.NoteDialogs
-import fh.campus.djournal.utils.ToastMaker
 import fh.campus.djournal.viewmodels.NoteViewModel
 import fh.campus.djournal.viewmodels.NoteViewModelFactory
 
@@ -149,13 +148,12 @@ class NotesFragment : Fragment() {
                 }
                 R.id.fab_voice_note -> {
                     findNavController().navigate(
-                        NotesFragmentDirections.actionNotesFragmentToRecordingFragment()
+                        NotesFragmentDirections.actionNotesFragmentToRecordingFragment(journalId)
                     )
                     speedDialView.close() // To close the Speed Dial with animation
                 }
                 R.id.fab_drawing_note -> {
                     //TODO: navigate to voice note fragment
-                    ToastMaker().toastMaker(requireContext(), "BBBB")
                     speedDialView.close() // To close the Speed Dial with animation
                 }
             }

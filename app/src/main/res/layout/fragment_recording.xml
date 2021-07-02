@@ -23,7 +23,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <fh.campus.djournal.models.WaveformView
+            <fh.campus.djournal.utils.WaveformView
                 android:id="@+id/waveFormView"
                 android:layout_width="match_parent"
                 android:layout_height="400px"

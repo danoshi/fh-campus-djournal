@@ -2,6 +2,7 @@ package fh.campus.djournal.fragments
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaRecorder
 import android.os.*
@@ -14,15 +15,27 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import fh.campus.djournal.R
+import fh.campus.djournal.database.AppDatabase
 import fh.campus.djournal.databinding.FragmentRecordingBinding
-import fh.campus.djournal.models.Timer
-import fh.campus.djournal.utils.ToastMaker
+import fh.campus.djournal.models.AudioRecord
+import fh.campus.djournal.repositories.AudioRecordRepository
+import fh.campus.djournal.repositories.NoteRepository
+import fh.campus.djournal.utils.Timer
+import fh.campus.djournal.utils.Util
+import fh.campus.djournal.viewmodels.AudioRecordViewModel
+import fh.campus.djournal.viewmodels.AudioRecordViewModelFactory
+import fh.campus.djournal.viewmodels.NoteViewModel
+import fh.campus.djournal.viewmodels.NoteViewModelFactory
 import kotlinx.android.synthetic.main.bottom_sheet.*
 import kotlinx.android.synthetic.main.fragment_recording.*
 import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
+import java.io.ObjectOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -30,6 +43,8 @@ const val REQUEST_CODE = 200
 
 class RecordingFragment : Fragment(), Timer.OnTimerTickListener {
     private lateinit var binding: FragmentRecordingBinding
+    private lateinit var viewModelFactory: AudioRecordViewModelFactory
+    private lateinit var recordViewModel: AudioRecordViewModel
 
     private lateinit var amplitudes: ArrayList<Float>
     private var permissions = arrayOf(Manifest.permission.RECORD_AUDIO)
@@ -40,6 +55,9 @@ class RecordingFragment : Fragment(), Timer.OnTimerTickListener {
     private var fileName = ""
     private var isRecording = false
     private var isPaused = false
+
+    private var duration = ""
+    private var journalId = 0L
 
     private lateinit var timer: Timer
     private lateinit var vibrator: Vibrator
@@ -67,6 +85,20 @@ class RecordingFragment : Fragment(), Timer.OnTimerTickListener {
         bottomSheetBehavior.peekHeight = 0
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
+        val args = RecordingFragmentArgs.fromBundle(requireArguments())
+        journalId = args.journalId
+
+        val application = requireNotNull(this.activity).application
+
+        val dataSource = AppDatabase.getDatabase(application).recordDao
+        val repository = AudioRecordRepository.getInstance(dataSource)
+        viewModelFactory = AudioRecordViewModelFactory(repository)
+
+        recordViewModel =
+            ViewModelProvider(
+                this, viewModelFactory
+            ).get(AudioRecordViewModel::class.java)
+
         timer = Timer(this)
         vibrator = activity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
@@ -88,14 +120,12 @@ class RecordingFragment : Fragment(), Timer.OnTimerTickListener {
 
 
         binding.btnList.setOnClickListener {
-            //TODO
-            ToastMaker().toastMaker(requireContext(), "List button")
+            findNavController().navigate(RecordingFragmentDirections.actionRecordingFragmentToRecordsFragment(journalId))
         }
 
 
         binding.btnDone.setOnClickListener {
             stopRecording()
-            ToastMaker().toastMaker(requireContext(), "Record saved")
 
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
             bottomSheetBG.visibility = View.VISIBLE
@@ -120,7 +150,6 @@ class RecordingFragment : Fragment(), Timer.OnTimerTickListener {
         binding.btnDelete.setOnClickListener {
             stopRecording()
             File("$dirPath$fileName.mp3").delete()
-            ToastMaker().toastMaker(requireContext(), "record deleted")
         }
 
         binding.btnDelete.isClickable = false
@@ -133,9 +162,24 @@ class RecordingFragment : Fragment(), Timer.OnTimerTickListener {
     private fun save() {
         val newFileName = fileNameInput.text.toString()
         if (newFileName != fileName) {
-            var newFile = File("$dirPath$newFileName.mp3")
+            val newFile = File("$dirPath$newFileName.mp3")
             File("$dirPath$fileName.mp3").renameTo(newFile)
         }
+        val filePath = "$dirPath$newFileName.mp3"
+        val timestamp = Util().getDateTime()
+        val ampsPath = "$dirPath$newFileName"
+
+        try {
+            val fileOutputStream = FileOutputStream(ampsPath)
+            val out = ObjectOutputStream(fileOutputStream)
+            out.writeObject(amplitudes)
+            fileOutputStream.close()
+            out.close()
+        } catch (e: IOException) {
+        }
+
+        val record = AudioRecord(newFileName, filePath, timestamp, duration, ampsPath, journalId)
+        recordViewModel.addRecord(record)
     }
 
     private fun dismiss() {
@@ -239,6 +283,7 @@ class RecordingFragment : Fragment(), Timer.OnTimerTickListener {
 
     override fun onTimerTick(duration: String) {
         binding.tvTimer.text = duration
+        this.duration = duration.dropLast(3)
         waveFormView.addAmplitude(recorder.maxAmplitude.toFloat())
     }
 }

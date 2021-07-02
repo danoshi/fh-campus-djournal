@@ -1,4 +1,4 @@
-package fh.campus.djournal.models
+package fh.campus.djournal.utils
 
 import android.os.Handler
 import android.os.Looper
