@@ -3,8 +3,6 @@ package fh.campus.djournal.repositories
 import androidx.lifecycle.LiveData
 import fh.campus.djournal.models.Note
 import fh.campus.djournal.database.NoteDao
-import fh.campus.djournal.models.Journal
-import fh.campus.djournal.models.JournalWithNotes
 
 class NoteRepository(private val noteDao: NoteDao) {
 

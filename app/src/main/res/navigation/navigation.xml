@@ -62,6 +62,11 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_notesFragment_to_recordingFragment"
+            app:destination="@id/recordingFragment"
+            app:popUpTo="@id/notesFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/noteDetailFragment"
@@ -76,6 +81,27 @@
             app:destination="@id/notesFragment"
             app:popUpTo="@id/notesFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="journalId"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/recordingFragment"
+        android:name="fh.campus.djournal.fragments.RecordingFragment"
+        android:label="Voice Recording"
+        tools:layout="@layout/fragment_recording" >
+        <argument
+            android:name="journalId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_recordingFragment_to_recordsFragment"
+            app:destination="@id/recordsFragment"
+            app:popUpTo="@id/recordingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recordsFragment"
+        android:name="fh.campus.djournal.fragments.RecordsFragment"
+        android:label="Recordings" >
         <argument
             android:name="journalId"
             app:argType="long" />

@@ -23,12 +23,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        drawerLayout = binding.drawerLayout
 
         // get tha navController of our NavHostFragment
         navController = this.findNavController(R.id.navhostFragment)
         // setup the action bar/top menu with our navController
-        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
+        NavigationUI.setupActionBarWithNavController(this, navController)
 
     }
 

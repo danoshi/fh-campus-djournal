@@ -1,10 +1,16 @@
 package fh.campus.djournal.utils
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.os.Environment
+import android.print.PrintAttributes
 import android.text.InputType
 import android.widget.EditText
+import android.widget.Toast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.uttampanchasara.pdfgenerator.CreatePdf
+import fh.campus.djournal.activities.MainActivity
 import fh.campus.djournal.models.Note
 import fh.campus.djournal.viewmodels.NoteViewModel
 
@@ -12,7 +18,7 @@ class NoteDialogs(private val context: Context, private val noteViewModel: NoteV
     private var newTitle = ""
 
     fun noteOptionDialog(note: Note) {
-        val items = arrayOf("Rename", "Delete")
+        val items = arrayOf("Rename", "Delete", "Convert To PDF")
         MaterialAlertDialogBuilder(context)
             .setTitle("Options")
             .setItems(items) { dialog, which ->
@@ -22,6 +28,9 @@ class NoteDialogs(private val context: Context, private val noteViewModel: NoteV
                     }
                     1 -> {
                         deleteConfirmationDialog(note)
+                    }
+                    2 -> {
+                        createPdf(note)
                     }
                 }
             }
@@ -62,6 +71,25 @@ class NoteDialogs(private val context: Context, private val noteViewModel: NoteV
         ) { dialog, which -> dialog.cancel() }
 
         builder.show()
+    }
+
+    fun createPdf(note: Note){
+        CreatePdf(context)
+            .setPdfName(note.name)
+            .openPrintDialog(true)
+            .setPageSize(PrintAttributes.MediaSize.ISO_A4)
+            .setContent(note.text)
+            .setFilePath("${Activity().externalCacheDir?.absolutePath}/MyPdf")
+            .setCallbackListener(object : CreatePdf.PdfCallbackListener {
+                override fun onFailure(errorMsg: String) {
+                    Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onSuccess(filePath: String) {
+                    Toast.makeText(context, "Pdf Saved at: $filePath", Toast.LENGTH_SHORT).show()
+                }
+            })
+            .create()
     }
 
 

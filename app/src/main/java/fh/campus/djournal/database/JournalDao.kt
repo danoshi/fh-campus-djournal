@@ -3,8 +3,6 @@ package fh.campus.djournal.database
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import fh.campus.djournal.models.Journal
-import fh.campus.djournal.models.JournalWithNotes
-import fh.campus.djournal.models.Note
 
 @Dao
 interface JournalDao {

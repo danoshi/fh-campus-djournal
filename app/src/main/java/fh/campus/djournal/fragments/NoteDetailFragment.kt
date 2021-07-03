@@ -25,7 +25,6 @@ import fh.campus.djournal.database.AppDatabase
 import fh.campus.djournal.databinding.FragmentNoteDetailBinding
 import fh.campus.djournal.models.Note
 import fh.campus.djournal.repositories.NoteRepository
-import fh.campus.djournal.utils.ToastMaker
 import fh.campus.djournal.utils.Util
 import fh.campus.djournal.viewmodels.NoteViewModel
 import fh.campus.djournal.viewmodels.NoteViewModelFactory

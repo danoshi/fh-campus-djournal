@@ -1,9 +1,16 @@
 package fh.campus.djournal.fragments
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Environment
+import android.print.PrintAttributes
+import android.text.InputType
 import android.util.Log
 import android.view.*
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
@@ -13,9 +20,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.leinardi.android.speeddial.SpeedDialView
+import com.uttampanchasara.pdfgenerator.CreatePdf
 import fh.campus.djournal.R
 import fh.campus.djournal.adapters.NoteListAdapter
 import fh.campus.djournal.database.AppDatabase
@@ -23,7 +32,6 @@ import fh.campus.djournal.databinding.FragmentNotesBinding
 import fh.campus.djournal.models.Note
 import fh.campus.djournal.repositories.NoteRepository
 import fh.campus.djournal.utils.NoteDialogs
-import fh.campus.djournal.utils.ToastMaker
 import fh.campus.djournal.viewmodels.NoteViewModel
 import fh.campus.djournal.viewmodels.NoteViewModelFactory
 
@@ -69,7 +77,10 @@ class NotesFragment : Fragment() {
                     )
                 )
             },
-            onNoteItemLongClicked = { note -> dialog.noteOptionDialog(note) },
+            onNoteItemLongClicked = { note ->
+//                CreatePdf(requireContext()
+                noteOptionDialog(note)
+            },
         )    // instantiate a new MovieListAdapter for recyclerView
         binding.noteList.adapter = adapter // assign adapter to the recyclerView
 
@@ -115,7 +126,7 @@ class NotesFragment : Fragment() {
                     .fab_voice_note, drawable
             )
                 .setFabBackgroundColor(resources.getColor(R.color.teal_200))
-                .setLabel("New Voice Note")
+                .setLabel("Voice Note")
                 .setLabelBackgroundColor(Color.TRANSPARENT)
                 .create()
         )
@@ -129,7 +140,7 @@ class NotesFragment : Fragment() {
                     .ic_draw_black_48dp
             )
                 .setFabBackgroundColor(resources.getColor(R.color.material_blue_700))
-                .setLabel("New Voice Note")
+                .setLabel("New Drawing Note")
                 .setLabelBackgroundColor(Color.TRANSPARENT)
                 .create()
         )
@@ -148,18 +159,94 @@ class NotesFragment : Fragment() {
                     speedDialView.close() // To close the Speed Dial with animation
                 }
                 R.id.fab_voice_note -> {
-                    //TODO: navigate to voice note fragment
-                    ToastMaker().toastMaker(requireContext(), "AAAA")
+                    findNavController().navigate(
+                        NotesFragmentDirections.actionNotesFragmentToRecordingFragment(journalId)
+                    )
                     speedDialView.close() // To close the Speed Dial with animation
                 }
                 R.id.fab_drawing_note -> {
                     //TODO: navigate to voice note fragment
-                    ToastMaker().toastMaker(requireContext(), "BBBB")
                     speedDialView.close() // To close the Speed Dial with animation
                 }
             }
             true
         })
+    }
+
+    private fun noteOptionDialog(note: Note) {
+        val items = arrayOf("Rename", "Delete", "Convert To PDF")
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Options")
+            .setItems(items) { dialog, which ->
+                when (which) {
+                    0 -> {
+                        updateNameDialog(note)
+                    }
+                    1 -> {
+                        deleteConfirmationDialog(note)
+                    }
+                    2 -> {
+                        createPdf(note)
+                    }
+                }
+            }
+            .setPositiveButton("CANCEL") { dialog, which ->
+                dialog.cancel()
+            }
+            .show()
+    }
+
+    private fun deleteConfirmationDialog(note: Note) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("DANGER")
+            .setMessage("Are you sure you want to delete this note?")
+            .setPositiveButton("CONFIRM") { dialog, which ->
+                noteViewModel.deleteNote(note)
+            }
+            .setNegativeButton("CANCEL") { dialog, which ->
+                dialog.cancel()
+            }
+            .show()
+    }
+
+    private var newTitle = ""
+    private fun updateNameDialog(note: Note) {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Rename")
+        val input = EditText(context)
+        input.inputType = InputType.TYPE_CLASS_TEXT
+        builder.setView(input)
+        builder.setPositiveButton(
+            "Save"
+        ) { dialog, which ->
+            newTitle = input.text.toString()
+            note.name = newTitle
+            noteViewModel.updateNote(note)
+        }
+        builder.setNegativeButton(
+            "Cancel"
+        ) { dialog, which -> dialog.cancel() }
+
+        builder.show()
+    }
+
+    private fun createPdf(note: Note) {
+        CreatePdf(requireContext())
+            .setPdfName(note.name)
+            .openPrintDialog(true)
+            .setPageSize(PrintAttributes.MediaSize.ISO_A4)
+            .setContent(note.text)
+            .setFilePath("${activity?.externalCacheDir?.absolutePath}/MyPdf")
+            .setCallbackListener(object : CreatePdf.PdfCallbackListener {
+                override fun onFailure(errorMsg: String) {
+                    Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onSuccess(filePath: String) {
+                    Toast.makeText(context, "Pdf Saved at: $filePath", Toast.LENGTH_SHORT).show()
+                }
+            })
+            .create()
     }
 
 
