@@ -13,12 +13,12 @@ import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 
-class ShapesInteractor(val countByGroup: () -> Unit) {
-    private val ourInstance: ShapesInteractor = ShapesInteractor{}
+class ShapesInteractor {
+    private  var shapesInteractor: ShapesInteractor? = null
     private var mContext: Context? = null
 
     fun getInstance(): ShapesInteractor? {
-        return ourInstance
+        return shapesInteractor
     }
 
     private fun ShapesInteractor() {}

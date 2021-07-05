@@ -44,6 +44,7 @@ android {
 }
 
 dependencies {
+
     //pdf generator https://github.com/UttamPanchasara/PDF-Generator?
     implementation 'com.uttampanchasara.pdfgenerator:pdfgenerator:1.3'
 

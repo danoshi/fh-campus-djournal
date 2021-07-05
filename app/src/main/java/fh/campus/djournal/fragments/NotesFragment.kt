@@ -165,7 +165,9 @@ class NotesFragment : Fragment() {
                     speedDialView.close() // To close the Speed Dial with animation
                 }
                 R.id.fab_drawing_note -> {
-                    //TODO: navigate to voice note fragment
+                    findNavController().navigate(
+                       NotesFragmentDirections.actionNotesFragmentToDrawingFragment(drawingFragmentID = 1)
+                    )
                     speedDialView.close() // To close the Speed Dial with animation
                 }
             }

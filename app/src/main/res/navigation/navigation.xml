@@ -67,6 +67,9 @@
             app:destination="@id/recordingFragment"
             app:popUpTo="@id/notesFragment"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_notesFragment_to_drawingFragment"
+            app:destination="@id/drawingFragment" />
     </fragment>
     <fragment
         android:id="@+id/noteDetailFragment"
@@ -104,6 +107,18 @@
         android:label="Recordings" >
         <argument
             android:name="journalId"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/drawingFragment"
+        android:name="fh.campus.djournal.fragments.DrawingFragment"
+        android:label="content_canvas_draw"
+        tools:layout="@layout/content_canvas_draw" >
+        <action
+            android:id="@+id/action_drawingFragment_to_notesFragment"
+            app:destination="@id/notesFragment" />
+        <argument
+            android:name="drawingFragmentID"
             app:argType="long" />
     </fragment>
 </navigation>

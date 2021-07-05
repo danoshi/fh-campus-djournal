@@ -9,9 +9,10 @@ import fh.campus.djournal.view.CustomView
 import java.io.Serializable
 
 class CanvasPresenter(
-    private val canvas: CustomView,
-    private val mContext: Context,
-    private val shapesInteractor: ShapesInteractor) {
+    private val canvas: CustomView?,
+    private val mContext: Context) {
+
+    private var shapesInteractor: ShapesInteractor = ShapesInteractor()
 
     private val onTouchListener = object : CanvasTouch {
         override fun onClickEvent(event: MotionEvent) {
@@ -29,8 +30,12 @@ class CanvasPresenter(
         get() = shapesInteractor.getInstance()?.getCountByGroup()
 
     init {
-        canvas.canvasTouchofShapes = onTouchListener
-        initializeUIComponents(canvas, mContext)
+        if (canvas != null) {
+            canvas.canvasTouchofShapes = onTouchListener
+        }
+        if (canvas != null) {
+            initializeUIComponents(canvas, mContext)
+        }
     }
 
     private fun initializeUIComponents(canvas: CustomView, mContext: Context) {
@@ -41,17 +46,18 @@ class CanvasPresenter(
 
     fun setMaxX(maxX: Int) {
         shapesInteractor.getInstance()?.max_X
-
-        fun setMaxY(maxY: Int) {
-            shapesInteractor.getInstance()?.max_Y
-        }
-
-        fun addShapeRandom(type: Shape.Type) {
-            shapesInteractor.getInstance()?.addShapeRandom(type)
-        }
-
-        fun undo() {
-            shapesInteractor.getInstance()?.undo()
-        }
     }
+
+    fun setMaxY(maxY: Int) {
+        shapesInteractor.getInstance()?.max_Y
+    }
+
+    fun addShapeRandom(type: Shape.Type) {
+        shapesInteractor.getInstance()?.addShapeRandom(type)
+    }
+
+    fun undo() {
+        shapesInteractor.getInstance()?.undo()
+    }
+
 }

@@ -7,8 +7,6 @@ import java.io.Serializable
 class StatsPresenter(private val shapesInteractor: ShapesInteractor) {
 
 
-    val countByGroup: (() -> Unit)?
-        get() = shapesInteractor.getInstance()?.countByGroup
 
     fun deleteAllByShape(shapeType: Shape.Type) {
         shapesInteractor.getInstance()?.deleteAllByShape(shapeType)
