@@ -17,6 +17,7 @@ import fh.campus.djournal.models.Drawing
 import fh.campus.djournal.presenter.CanvasPresenter
 import fh.campus.djournal.repositories.DrawingRepository
 import fh.campus.djournal.utils.Constants
+import fh.campus.djournal.utils.Shape
 import fh.campus.djournal.view.CustomView
 import fh.campus.djournal.viewmodels.DrawingViewModel
 import fh.campus.djournal.viewmodels.DrawingViewModelFactory
@@ -52,13 +53,13 @@ class DrawingFragment : Fragment() {
 
     private fun setupActionButton(){
         binding.fabCircle.setOnClickListener {
-            canvasPresenter.addShapeRandom(type = fh.campus.djournal.utils.Shape.Type.CIRCLE)
+            canvasPresenter.addShapeRandom(type = Shape.Type.CIRCLE)
         }
         binding.fabRect.setOnClickListener {
-            canvasPresenter.addShapeRandom(type = fh.campus.djournal.utils.Shape.Type.SQUARE)
+            canvasPresenter.addShapeRandom(type = Shape.Type.SQUARE)
         }
         binding.fabTriangle.setOnClickListener {
-            canvasPresenter.addShapeRandom(type = fh.campus.djournal.utils.Shape.Type.SQUARE)
+            canvasPresenter.addShapeRandom(type = Shape.Type.SQUARE)
         }
         binding.fabUndo.setOnClickListener {
             canvasPresenter.undo()
