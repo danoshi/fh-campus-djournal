@@ -56,46 +56,46 @@ After registering just log in with your credentials and start writing notes :)
 ### Create a Journal
 
 * To create a journal just click the floating action button in the home screen  
-![](images/journal_1.png)  
+  <img src="images/journal_1.png" alt="journal_1" width="200"/>
 * give your new journal a name and description  
-![](images/journal_2.png)
+  <img src="images/journal_2.png" alt="journal_2" width="200"/>
 
 * and you are ready to fill it with notes  
-![](images/journal_3.png)  
+  <img src="images/journal_3.png" alt="journal_3" width="200"/>
   
 ### Create a written note  
 
 * To create a new written note just click the floating action button, in the view that appears after you click on a journal, and click the icon to create a new written note    
-![](images/wnote_1.png)
+  <img src="images/wnote_1.png" alt="wnote_1" width="200"/>
 * Write down your awesome idea  
-  ![](images/wnote_2.png)
+  <img src="images/wnote_2.png" alt="wnote_2" width="200"/>
 * Save it  
-  ![](images/wnote_3.png)
+  <img src="images/wnote_3.png" alt="wnote_3" width="200"/>
 * And view it later to update or delete it  
-  ![](images/wnote_4.png)  
+  <img src="images/wnote_4.png" alt="wnote_4" width="200"/>
   
 ### Create a voice recoded note  
 
 * To create a voice recorded note just click the floating action button, in the view that appears after you click on a journal, and click the icon to create a new voice recorded note  
-  ![](images/vnote_1.png)
+  <img src="images/vnote_1.png" alt="vnote_1" width="200"/>
 * Start the recording and record your important ideas  
-  ![](images/vnote_2.png)
+  <img src="images/vnote_2.png" alt="vnote_2" width="200"/>
 * Save it for later  
-  ![](images/vnote_3.png)
+  <img src="images/vnote_3.png" alt="vnote_3" width="200"/>
 * And listen to it again  
-  ![](images/vnote_4.png)
+  <img src="images/vnote_4.png" alt="vnote_4" width="200"/>
 
 ### Create a freehand note  
 TODO  
 
 ### Print or share your written note to let others see your awesome ideas  
 * Click longer on the written note you want to print  
-  ![](images/convert_1.png)
+  <img src="images/convert_1.png" alt="convert_1" width="200"/>
 * Select Convert to PDF  
-  ![](images/convert_2.png)
+  <img src="images/convert_2.png" alt="convert_2" width="200"/>
 * Print it or save it in your download folder  
-  ![](images/convert_3.png)
+  <img src="images/convert_3.png" alt="convert_3" width="200"/>
 * And share it with your friends  
-  ![](images/convert_4.png)
+  <img src="images/convert_4.png" alt="convert_4" width="200"/>
 
 
