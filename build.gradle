@@ -33,6 +33,9 @@ allprojects {
         maven {
             url 'https://dl.bintray.com/azeesoft/maven'
         }
+        maven {
+            url 'https://jitpack.io'
+        }
     }
 }
 

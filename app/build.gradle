@@ -44,6 +44,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.github.ajithvgiri:Canvas-Library:v1.1.1'
 
     //pdf generator https://github.com/UttamPanchasara/PDF-Generator?
     implementation 'com.uttampanchasara.pdfgenerator:pdfgenerator:1.3'

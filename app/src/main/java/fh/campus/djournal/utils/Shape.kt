@@ -32,7 +32,7 @@ class Shape() : Parcelable{
         this.width = width
     }
     enum class Type private constructor(val value: Int) {
-        CIRCLE(0), SQUARE(1), TRIANGLE(2)
+        CIRCLE(0), SQUARE(1), TRIANGLE(2), ARROW(3), LINE(4)
     }
 
     fun getxCordinate(): Int {

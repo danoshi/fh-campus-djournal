@@ -11,6 +11,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/layoutDrawing"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.DrawingFragment">
@@ -58,6 +59,37 @@
         app:srcCompat="@drawable/triangle">
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_anchor="@+id/fabTriangle"
+            app:layout_anchorGravity="bottom|left"
+            android:layout_gravity="start"
+            android:layout_marginEnd="30dp"
+            app:rippleColor="@android:color/darker_gray"
+            android:layout_margin="@dimen/fab_margin"
+            android:tooltipText="Line"
+            app:srcCompat="@drawable/straightline">
+
+        </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_anchor="@+id/fabLine"
+            app:layout_anchorGravity="bottom|left"
+            android:layout_gravity="start"
+            android:layout_marginEnd="30dp"
+            app:rippleColor="@android:color/darker_gray"
+            android:layout_margin="@dimen/fab_margin"
+            android:tooltipText="Line"
+            app:srcCompat="@drawable/arrow">
+
+        </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabUndo"

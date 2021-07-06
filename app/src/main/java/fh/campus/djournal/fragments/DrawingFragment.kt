@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.ajithvgiri.canvaslibrary.CanvasView
 import fh.campus.djournal.R
 import fh.campus.djournal.databinding.FragmentDrawingBinding
 import fh.campus.djournal.interactor.ShapesInteractor
@@ -41,8 +42,10 @@ class DrawingFragment : Fragment() {
 
         canvas = binding.include.canvasDrawView
         mContext = this.requireContext()
-        canvasPresenter = CanvasPresenter(canvas, mContext)
+        val canvasView = CanvasView(mContext)
 
+        canvasPresenter = CanvasPresenter(canvas, mContext)
+        binding.layoutDrawing.addView(canvasView)
 
         setupActionButton()
         getCanvasWidthAndHeight()
@@ -64,8 +67,21 @@ class DrawingFragment : Fragment() {
             Log.d("CLICKED", "TRIANGLE")
 
         }
+        binding.fabLine.setOnClickListener {
+            canvasPresenter.addShapeRandom(type = Shape.Type.LINE)
+            Log.d("CLICKED", "LINE")
+
+        }
+        binding.fabArrow.setOnClickListener {
+            canvasPresenter.addShapeRandom(type = Shape.Type.ARROW)
+            Log.d("CLICKED", "Arrow")
+
+        }
         binding.fabUndo.setOnClickListener {
+            val canvasView = CanvasView(mContext)
+            canvasView.clearCanvas();
             canvasPresenter.undo()
+
         }
     }
     private fun getCanvasWidthAndHeight(){

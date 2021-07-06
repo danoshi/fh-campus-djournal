@@ -58,6 +58,22 @@ class CustomView(context: Context?, @Nullable attrs: AttributeSet?) :
                         shape.getxCordinate(), shape.getyCordinate(),
                         (2 * RADIUS)
                     )
+                    Shape.Type.ARROW -> drawArrow(
+                        shape.getxCordinate(), shape.getyCordinate(),
+                        (RADIUS)
+                    )
+                    Shape.Type.LINE -> {
+                        drawPaint?.color = Color.BLACK
+                        drawPaint?.let {
+                            canvas.drawLine(
+                                shape.getxCordinate().toFloat(),
+                                shape.getyCordinate().toFloat(),
+                                shape.getxCordinate().toFloat(),
+                                RADIUS.toFloat(),
+                                it
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -106,6 +122,20 @@ class CustomView(context: Context?, @Nullable attrs: AttributeSet?) :
 
     var squareSideHalf = 1 / sqrt(2.0)
 
+    fun drawArrow(x: Int, y: Int, width: Int){
+        drawPaint?.color = Color.RED
+        val halfWidth = width / 2
+        val path = Path()
+        path.lineTo((x - halfWidth).toFloat(), (y + halfWidth).toFloat()) // Bottom left
+        path.lineTo((x + halfWidth).toFloat(), (y + halfWidth).toFloat()) // Bottom right
+        path.lineTo(x.toFloat(), (y - halfWidth).toFloat()) // Back to Top
+        path.close()
+        drawPaint?.let { canvas?.drawPath(path, it) }
+
+    }
+
+
+
     //Consider pivot x,y as centroid.
     fun drawRectangle(x: Int, y: Int) {
         drawPaint?.color = Color.RED
@@ -117,6 +147,7 @@ class CustomView(context: Context?, @Nullable attrs: AttributeSet?) :
         )
         drawPaint?.let { canvas?.drawRect(rectangle, it) }
     }
+
 
     /*
     select three vertices of triangle. Draw 3 lines between them to form a traingle
