@@ -14,14 +14,13 @@ import kotlin.math.sqrt
 
 
 class ShapesInteractor {
-    private  var shapesInteractor: ShapesInteractor? = null
+    private val shapesInteractor: ShapesInteractor = ShapesInteractor()
     private var mContext: Context? = null
 
-    fun getInstance(): ShapesInteractor? {
+    fun getInstance(): ShapesInteractor {
         return shapesInteractor
     }
 
-    private fun ShapesInteractor() {}
     var _canvas: CustomView? = null
     var max_X = 0
     var max_Y= 0
@@ -41,16 +40,16 @@ class ShapesInteractor {
      * @param initialTouchY
      */
     private fun askForDeleteShape(
-        oldShape: Shape,
-        index: Int,
-        initialTouchX: Float,
-        initialTouchY: Float
+            oldShape: Shape,
+            index: Int,
+            initialTouchX: Float,
+            initialTouchY: Float
     ) {
         val builder= AlertDialog.Builder(mContext)
         builder.setMessage("Are you sure you want to delete ?")
             .setTitle("Delete Shape")
-        builder.setPositiveButton("ok",
-            DialogInterface.OnClickListener { dialog, id -> deleteShape(oldShape, index) })
+        builder.setPositiveButton("ok"
+        ) { dialog, id -> deleteShape(oldShape, index) }
         builder.setNegativeButton("cancel", DialogInterface.OnClickListener { dialog, id ->
             // User cancelled the dialog
         })
@@ -84,22 +83,22 @@ class ShapesInteractor {
 
                 //Find an existing shape where the user has clicked on the canvas
                 if (Constants.RADIUS >= calculateDistanceBetweenPoints(
-                        oldX.toDouble(),
-                        oldY.toDouble(),
-                        touchX.toDouble(),
-                        touchY.toDouble()
-                    )
+                                oldX.toDouble(),
+                                oldY.toDouble(),
+                                touchX.toDouble(),
+                                touchY.toDouble()
+                        )
                 ) {
                     if (changeStatus == Constants.ACTION_TRANSFORM) addTransformShape(
-                        oldShape,
-                        i,
-                        oldX,
-                        oldY
+                            oldShape,
+                            i,
+                            oldX,
+                            oldY
                     ) else if (changeStatus == Constants.ACTION_DELETE) askForDeleteShape(
-                        oldShape,
-                        i,
-                        oldX.toFloat(),
-                        oldY.toFloat()
+                            oldShape,
+                            i,
+                            oldX.toFloat(),
+                            oldY.toFloat()
                     )
                     break
                 }
@@ -122,10 +121,10 @@ class ShapesInteractor {
     }
 
     fun calculateDistanceBetweenPoints(
-        x1: Double,
-        y1: Double,
-        x2: Double,
-        y2: Double
+            x1: Double,
+            y1: Double,
+            x2: Double,
+            y2: Double
     ): Double {
         return sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1))
     }
