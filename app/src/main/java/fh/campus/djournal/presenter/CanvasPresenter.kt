@@ -6,57 +6,55 @@ import fh.campus.djournal.interactor.ShapesInteractor
 import fh.campus.djournal.utils.Constants
 import fh.campus.djournal.utils.Shape
 import fh.campus.djournal.view.CustomView
-import java.io.Serializable
 
 class CanvasPresenter(
-    private val canvas: CustomView?,
+    private val canvas: CustomView,
     private val mContext: Context) {
 
-    private val shapesInteractor: ShapesInteractor? = ShapesInteractor().getInstance()
     private val onTouchListener = object : CanvasTouch {
         override fun onClickEvent(event: MotionEvent) {
 
-            shapesInteractor?.changeShapeOnTouch(event.x, event.y, Constants.ACTION_TRANSFORM)
+            ShapesInteractor.instance.changeShapeOnTouch(event.x, event.y, Constants.ACTION_TRANSFORM)
 
         }
 
         override fun onLongPressEvent(initialTouchX: Float, initialTouchY: Float) {
-            shapesInteractor?.changeShapeOnTouch(initialTouchX, initialTouchY, Constants.ACTION_DELETE)
+            ShapesInteractor.instance.changeShapeOnTouch(initialTouchX, initialTouchY, Constants.ACTION_DELETE)
         }
     }
 
     val countByGroup: HashMap<Shape.Type, Int>?
-        get() = shapesInteractor?.getCountByGroup()
+        get() = ShapesInteractor.instance.countByGroup
 
     init {
-        if (canvas != null) {
-            canvas.canvasTouchofShapes = onTouchListener
-        }
-        if (canvas != null) {
-            initializeUIComponents(canvas, mContext)
-        }
+        canvas.canvasTouchofShapes = onTouchListener
+        initializeUIComponents(canvas, mContext)
     }
 
     private fun initializeUIComponents(canvas: CustomView, mContext: Context) {
-        shapesInteractor?._canvas = canvas
-        shapesInteractor?.setContext(mContext)
+        ShapesInteractor.instance.canvas = canvas
+        ShapesInteractor.instance.setContext(mContext)
     }
 
 
     fun setMaxX(maxX: Int) {
-        shapesInteractor?.max_X
+        ShapesInteractor.instance.maxX = maxX
     }
 
     fun setMaxY(maxY: Int) {
-        shapesInteractor?.max_Y
+        ShapesInteractor.instance.maxY = maxY
     }
 
     fun addShapeRandom(type: Shape.Type) {
-        shapesInteractor?.addShapeRandom(type)
+        ShapesInteractor.instance.addShapeRandom(type)
     }
 
     fun undo() {
-        shapesInteractor?.undo()
+        ShapesInteractor.instance.undo()
+    }
+
+    companion object {
+        private val LOG_TAG = CanvasPresenter.javaClass.simpleName
     }
 
 }
