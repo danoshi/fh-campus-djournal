@@ -16,27 +16,8 @@ import kotlin.math.sqrt
 
 class ShapesInteractor {
     private var mContext: Context? = null
+    private var shapesInteractor: ShapesInteractor? = null
 
-
-    companion object {
-
-        private var shapesInteractor: ShapesInteractor? = null
-
-        fun getInstance(): Companion {
-            synchronized(this) {
-                var shapesInteractor = ShapesInteractor
-
-                if (shapesInteractor == null) {
-                    synchronized(ShapesInteractor::class.java) {
-                        if (shapesInteractor == null) {
-                            shapesInteractor = ShapesInteractor
-                        }
-                    }
-                }
-                return shapesInteractor
-            }
-        }
-    }
 
     fun getInstance(): ShapesInteractor? {
         if (shapesInteractor == ShapesInteractor())
