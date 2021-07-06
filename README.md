@@ -1,8 +1,8 @@
 # DJournal - Never forget your ideas
 
 Djournal is an android application which lets you create journals in which you can save written notes, voice recordings
-and drawings.
-<hr>  
+and drawings.  
+  <img src="images/DJournal.mp4" alt="djournal" width="200"/>
 
 ## Table of contents
 
@@ -41,13 +41,13 @@ The voice recorder was build with the help of https://www.youtube.com/channel/UC
 To run this project, run it either:
 
 * locally with android studio on an emulated android device  
-  ![](images/setup_1.png)
+  ![setup_1](images/setup_1.png)
 * on your own android mobile device with android studio  
-  ![](images/setup_2.png)
+  ![setup_2](images/setup_2.png)
 * or by creating an apk file and installing on you mobile android device
-  ![](images/setup_3.png)
-  ![](images/setup_3_2.png)
-  ![](images/setup_3_3.png)
+  ![setup_3](images/setup_3.png)
+  ![setup_3_2](images/setup_3_2.png)
+  ![setup_3_3](images/setup_3_3.png)
 
 ## Usage
 
