@@ -92,4 +92,13 @@ class RecordsFragment : Fragment() {
         mediaplayerStarted = false
     }
 
+    override fun onStop() {
+        super.onStop()
+        if (mediaplayerStarted) {
+            mediaplayer.stop()
+            mediaplayer.release()
+            mediaplayerStarted = false
+        }
+    }
+
 }
