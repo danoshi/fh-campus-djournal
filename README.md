@@ -8,7 +8,7 @@ and drawings.
 
 * [General info](#general-info)
 * [Technologies](#technologies)
-* [3 Party Libraries](#3 Party Libraries)
+* [3th-Party-Libraries](#3th-Party-Libraries)
 * [Setup](#Setup)
 * [Usage](#Usage)
 
@@ -25,7 +25,7 @@ Project is created with:
 
 
 
-## 3 Party Libraries
+## 3th-Party-Libraries
 
 This project uses the following third party libraries
 
