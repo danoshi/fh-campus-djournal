@@ -1,5 +1,6 @@
 package fh.campus.djournal.interactor
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -14,10 +15,33 @@ import kotlin.math.sqrt
 
 
 class ShapesInteractor {
-    private val shapesInteractor: ShapesInteractor = ShapesInteractor()
     private var mContext: Context? = null
 
-    fun getInstance(): ShapesInteractor {
+
+    companion object {
+
+        private var shapesInteractor: ShapesInteractor? = null
+
+        fun getInstance(): Companion {
+            synchronized(this) {
+                var shapesInteractor = ShapesInteractor
+
+                if (shapesInteractor == null) {
+                    synchronized(ShapesInteractor::class.java) {
+                        if (shapesInteractor == null) {
+                            shapesInteractor = ShapesInteractor
+                        }
+                    }
+                }
+                return shapesInteractor
+            }
+        }
+    }
+
+    fun getInstance(): ShapesInteractor? {
+        if (shapesInteractor == ShapesInteractor())
+            ShapesInteractor()
+        else shapesInteractor
         return shapesInteractor
     }
 

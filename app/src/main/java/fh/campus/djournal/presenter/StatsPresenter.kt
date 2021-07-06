@@ -4,11 +4,11 @@ import fh.campus.djournal.interactor.ShapesInteractor
 import fh.campus.djournal.utils.Shape
 import java.io.Serializable
 
-class StatsPresenter(private val shapesInteractor: ShapesInteractor) {
+class StatsPresenter {
 
-
+    private lateinit var shapesInteractor: ShapesInteractor
 
     fun deleteAllByShape(shapeType: Shape.Type) {
-        shapesInteractor.getInstance()?.deleteAllByShape(shapeType)
+        shapesInteractor.deleteAllByShape(shapeType)
     }
 }

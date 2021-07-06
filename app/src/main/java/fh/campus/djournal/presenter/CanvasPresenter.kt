@@ -12,22 +12,21 @@ class CanvasPresenter(
     private val canvas: CustomView?,
     private val mContext: Context) {
 
-    private var shapesInteractor: ShapesInteractor = ShapesInteractor()
-
+    private val shapesInteractor: ShapesInteractor? = ShapesInteractor().getInstance()
     private val onTouchListener = object : CanvasTouch {
         override fun onClickEvent(event: MotionEvent) {
-            shapesInteractor.getInstance()?.changeShapeOnTouch(event.x, event.y, Constants.ACTION_TRANSFORM)
+
+            shapesInteractor?.changeShapeOnTouch(event.x, event.y, Constants.ACTION_TRANSFORM)
 
         }
 
         override fun onLongPressEvent(initialTouchX: Float, initialTouchY: Float) {
-            shapesInteractor.getInstance()
-                ?.changeShapeOnTouch(initialTouchX, initialTouchY, Constants.ACTION_DELETE)
+            shapesInteractor?.changeShapeOnTouch(initialTouchX, initialTouchY, Constants.ACTION_DELETE)
         }
     }
 
     val countByGroup: HashMap<Shape.Type, Int>?
-        get() = shapesInteractor.getInstance()?.getCountByGroup()
+        get() = shapesInteractor?.getCountByGroup()
 
     init {
         if (canvas != null) {
@@ -39,25 +38,25 @@ class CanvasPresenter(
     }
 
     private fun initializeUIComponents(canvas: CustomView, mContext: Context) {
-        shapesInteractor.getInstance()?._canvas = canvas
-        shapesInteractor.getInstance()?.setContext(mContext)
+        shapesInteractor?._canvas = canvas
+        shapesInteractor?.setContext(mContext)
     }
 
 
     fun setMaxX(maxX: Int) {
-        shapesInteractor.getInstance()?.max_X
+        shapesInteractor?.max_X
     }
 
     fun setMaxY(maxY: Int) {
-        shapesInteractor.getInstance()?.max_Y
+        shapesInteractor?.max_Y
     }
 
     fun addShapeRandom(type: Shape.Type) {
-        shapesInteractor.getInstance()?.addShapeRandom(type)
+        shapesInteractor?.addShapeRandom(type)
     }
 
     fun undo() {
-        shapesInteractor.getInstance()?.undo()
+        shapesInteractor?.undo()
     }
 
 }

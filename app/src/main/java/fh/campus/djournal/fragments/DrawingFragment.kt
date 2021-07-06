@@ -2,6 +2,7 @@ package fh.campus.djournal.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,12 +55,17 @@ class DrawingFragment : Fragment() {
     private fun setupActionButton(){
         binding.fabCircle.setOnClickListener {
             canvasPresenter.addShapeRandom(type = Shape.Type.CIRCLE)
+            Log.d("CLICKED", "CIRCLE")
         }
         binding.fabRect.setOnClickListener {
             canvasPresenter.addShapeRandom(type = Shape.Type.SQUARE)
+            Log.d("CLICKED", "Square")
+
         }
         binding.fabTriangle.setOnClickListener {
-            canvasPresenter.addShapeRandom(type = Shape.Type.SQUARE)
+            canvasPresenter.addShapeRandom(type = Shape.Type.TRIANGLE)
+            Log.d("CLICKED", "TRIANGLE")
+
         }
         binding.fabUndo.setOnClickListener {
             canvasPresenter.undo()
