@@ -44,6 +44,8 @@ android {
 }
 
 dependencies {
+    // canvas Editor https://github.com/outsbook/canvaseditor
+    implementation 'com.outsbook.libs:canvaseditor:1.0.0'
     //pdf generator https://github.com/UttamPanchasara/PDF-Generator?
     implementation 'com.uttampanchasara.pdfgenerator:pdfgenerator:1.3'
 

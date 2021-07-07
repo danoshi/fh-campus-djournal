@@ -8,7 +8,7 @@ import fh.campus.djournal.models.AudioRecord
 import fh.campus.djournal.models.Journal
 import fh.campus.djournal.models.Note
 
-@Database(entities = arrayOf(Journal::class, Note::class, AudioRecord::class), version = 8, exportSchema = false)
+@Database(entities = arrayOf(Journal::class, Note::class, AudioRecord::class), version = 9, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract val journalDao: JournalDao
     abstract val noteDao: NoteDao

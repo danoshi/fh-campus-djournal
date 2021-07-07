@@ -82,7 +82,7 @@ class NoteDialogs(private val context: Context, private val noteViewModel: NoteV
             .setFilePath("${Activity().externalCacheDir?.absolutePath}/MyPdf")
             .setCallbackListener(object : CreatePdf.PdfCallbackListener {
                 override fun onFailure(errorMsg: String) {
-                    Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "This note can not be converted into PDF", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onSuccess(filePath: String) {
