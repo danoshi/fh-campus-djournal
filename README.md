@@ -2,7 +2,7 @@
 
 Djournal is an android application which lets you create journals in which you can save written notes, voice recordings
 and drawings.  
-  <img src="images/DJournal.mp4" alt="djournal" width="200"/>
+
 
 ## Table of contents
 
