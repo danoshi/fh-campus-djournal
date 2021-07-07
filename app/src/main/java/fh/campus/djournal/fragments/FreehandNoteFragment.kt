@@ -5,9 +5,11 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -84,8 +86,57 @@ class FreehandNoteFragment : Fragment() {
                     canvasEditor.addBitmapSticker(BitmapFactory.decodeFile(note.freehandPath))
                 })
         }
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            when {
+                noteId.equals(-1L) -> {
+                    val freehandNote = canvasEditor.downloadBitmap()
+                    saveNewFreehandNoteDialog(
+                        binding.freehandNoteName.text.toString(),
+                        journalId,
+                        freehandNote
+                    )
+                }
+                else -> {
+                    val freehandNote = canvasEditor.downloadBitmap()
+                    saveFreehandNoteDialog(
+                        noteObj,
+                        journalId,
+                        freehandNote
+                    )
+                }
+            }
+        }
 
         return binding.root
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            //TODO: normaly it should be R.id.***
+            16908332 -> {
+                when {
+                    noteId.equals(-1L) -> {
+                        val freehandNote = canvasEditor.downloadBitmap()
+                        saveNewFreehandNoteDialog(
+                            binding.freehandNoteName.text.toString(),
+                            journalId,
+                            freehandNote
+                        )
+                    }
+                    else -> {
+                        val freehandNote = canvasEditor.downloadBitmap()
+                        saveFreehandNoteDialog(
+                            noteObj,
+                            journalId,
+                            freehandNote
+                        )
+                    }
+                }
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+
     }
 
     private fun initValue() {
