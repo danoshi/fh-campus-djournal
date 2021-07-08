@@ -1,18 +1,14 @@
 package fh.campus.djournal.fragments
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Environment
 import android.print.PrintAttributes
 import android.text.InputType
-import android.util.Log
 import android.view.*
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -21,7 +17,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.leinardi.android.speeddial.SpeedDialView
 import com.uttampanchasara.pdfgenerator.CreatePdf

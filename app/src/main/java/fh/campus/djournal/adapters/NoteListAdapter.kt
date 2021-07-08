@@ -8,12 +8,12 @@ import fh.campus.djournal.R
 import fh.campus.djournal.databinding.NoteItemBinding
 import fh.campus.djournal.models.Note
 
-class NoteListAdapter (
+class NoteListAdapter(
     private var dataSet: List<Note>,
     val onNoteItemShortClicked: (Note) -> Unit,
     val onNoteItemLongClicked: (Note) -> Unit,
 ) :
-    RecyclerView.Adapter<NoteListAdapter.ViewHolder>(){
+    RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
 
     fun updateDataSet(notes: List<Note>) {
         dataSet = notes

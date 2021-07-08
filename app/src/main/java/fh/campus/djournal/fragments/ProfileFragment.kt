@@ -14,12 +14,9 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.ktx.app
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import fh.campus.djournal.R
@@ -63,7 +60,7 @@ class ProfileFragment : Fragment() {
     }
 
 
-    private fun deleteAcc(){
+    private fun deleteAcc() {
         binding.buttonDeleteAcc.setOnClickListener {
             val text = EditText(context)
             val deleteAccDialog = AlertDialog.Builder(context)
@@ -84,11 +81,11 @@ class ProfileFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-                    .addOnFailureListener{
+                    .addOnFailureListener {
                         Toast.makeText(context, "Delete account failed", Toast.LENGTH_SHORT)
                             .show()
                     }
-                }
+            }
             deleteAccDialog.setNegativeButton(
                 "No"
             ) { dialog, which -> }
@@ -97,7 +94,7 @@ class ProfileFragment : Fragment() {
 
     }
 
-    private fun changeEmail(){
+    private fun changeEmail() {
         binding.buttonChangeEmail.setOnClickListener {
             val newEmail = EditText(context)
             val newEmailDialog = AlertDialog.Builder(context)
@@ -118,7 +115,7 @@ class ProfileFragment : Fragment() {
                         Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
                             .show()
                     }
-                    }
+            }
             newEmailDialog.setNegativeButton(
                 "No"
             ) { dialog, which -> }
@@ -126,7 +123,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun changeProfileImage(){
+    private fun changeProfileImage() {
         binding.buttonChangeProfile.setOnClickListener {
             val galleryIntent = Intent(
                 Intent.ACTION_PICK,
@@ -139,8 +136,8 @@ class ProfileFragment : Fragment() {
     @Override
     override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == 1000){
-            if(resultCode == Activity.RESULT_OK){
+        if (requestCode == 1000) {
+            if (resultCode == Activity.RESULT_OK) {
                 val imageUri = data!!.data
                 if (imageUri != null) {
                     uploadImageToFirebase(imageUri)
@@ -149,7 +146,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun uploadImageToFirebase(imageUri: Uri){
+    private fun uploadImageToFirebase(imageUri: Uri) {
         storage = FirebaseStorage.getInstance()
         var storageRef = storage.reference
         val fileRef = storageRef.child("users/" + auth.uid + "/profile.jpg")

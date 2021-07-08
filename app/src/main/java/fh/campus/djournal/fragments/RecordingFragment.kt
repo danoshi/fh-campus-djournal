@@ -32,7 +32,6 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.ObjectOutputStream
-import java.sql.Date
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -117,7 +116,11 @@ class RecordingFragment : Fragment(), Timer.OnTimerTickListener {
 
 
         binding.btnList.setOnClickListener {
-            findNavController().navigate(RecordingFragmentDirections.actionRecordingFragmentToRecordsFragment(journalId))
+            findNavController().navigate(
+                RecordingFragmentDirections.actionRecordingFragmentToRecordsFragment(
+                    journalId
+                )
+            )
         }
 
 
@@ -282,5 +285,12 @@ class RecordingFragment : Fragment(), Timer.OnTimerTickListener {
         binding.tvTimer.text = duration
         this.duration = duration.dropLast(3)
         waveFormView.addAmplitude(recorder.maxAmplitude.toFloat())
+    }
+
+    override fun onStop() {
+        if (isRecording) {
+            stopRecording()
+        }
+        super.onStop()
     }
 }

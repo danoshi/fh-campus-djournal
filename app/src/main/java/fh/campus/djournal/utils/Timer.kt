@@ -42,9 +42,9 @@ class Timer(listener: OnTimerTickListener) {
         val hours = (duration / (1000 * 60 * 60))
 
         val formatted = if (hours > 0)
-            "%02d:%02d:%02d.%02d".format(hours, minutes, seconds, millis/10)
+            "%02d:%02d:%02d.%02d".format(hours, minutes, seconds, millis / 10)
         else
-            "%02d:%02d.%02d".format(minutes, seconds, millis/10)
+            "%02d:%02d.%02d".format(minutes, seconds, millis / 10)
 
         return formatted
     }

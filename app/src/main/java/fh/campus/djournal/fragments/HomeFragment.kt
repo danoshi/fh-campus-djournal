@@ -18,8 +18,11 @@ import fh.campus.djournal.adapters.JournalListAdapter
 import fh.campus.djournal.database.AppDatabase
 import fh.campus.djournal.databinding.FragmentHomeBinding
 import fh.campus.djournal.models.Journal
-import fh.campus.djournal.utils.JournalDialogs
+import fh.campus.djournal.repositories.AudioRecordRepository
 import fh.campus.djournal.repositories.JournalRepository
+import fh.campus.djournal.utils.JournalDialogs
+import fh.campus.djournal.viewmodels.AudioRecordViewModel
+import fh.campus.djournal.viewmodels.AudioRecordViewModelFactory
 import fh.campus.djournal.viewmodels.JournalViewModel
 import fh.campus.djournal.viewmodels.JournalViewModelFactory
 
@@ -27,6 +30,8 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var journalViewModel: JournalViewModel
     private lateinit var viewModelFactory: JournalViewModelFactory
+    private lateinit var recordViewModel: AudioRecordViewModel
+    private lateinit var recordViewModelFactory: AudioRecordViewModelFactory
     private lateinit var auth: FirebaseAuth
     private lateinit var journalsToLog: List<Journal>
 
@@ -51,7 +56,15 @@ class HomeFragment : Fragment() {
                 this, viewModelFactory
             ).get(JournalViewModel::class.java)
 
-        val dialog = JournalDialogs(requireContext(), journalViewModel)
+        val recordDataSource = AppDatabase.getDatabase(application).recordDao
+        val recordRepo = AudioRecordRepository.getInstance(recordDataSource)
+        recordViewModelFactory = AudioRecordViewModelFactory(recordRepo)
+        recordViewModel =
+            ViewModelProvider(
+                this, recordViewModelFactory
+            ).get(AudioRecordViewModel::class.java)
+
+        val dialog = JournalDialogs(requireContext(), journalViewModel, recordViewModel)
 
         val adapter = JournalListAdapter(
             dataSet = listOf(),     // start with empty list
@@ -82,12 +95,13 @@ class HomeFragment : Fragment() {
 
         return binding.root
     }
+
     override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser
         val user = auth.uid
         Log.i("Users_UUID:", user.toString())
-        if(currentUser != null){
+        if (currentUser != null) {
             reload()
         }
     }
@@ -95,9 +109,9 @@ class HomeFragment : Fragment() {
     private fun reload() {
 
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return NavigationUI.
-        onNavDestinationSelected(item, requireView().findNavController())
+        return NavigationUI.onNavDestinationSelected(item, requireView().findNavController())
                 || super.onOptionsItemSelected(item)
     }
 
