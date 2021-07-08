@@ -286,4 +286,11 @@ class RecordingFragment : Fragment(), Timer.OnTimerTickListener {
         this.duration = duration.dropLast(3)
         waveFormView.addAmplitude(recorder.maxAmplitude.toFloat())
     }
+
+    override fun onStop() {
+        if (isRecording) {
+            stopRecording()
+        }
+        super.onStop()
+    }
 }
