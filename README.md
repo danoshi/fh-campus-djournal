@@ -34,7 +34,7 @@ Project is created with:
 
 
 
-## 3th-Party-Libraries
+## 3rd-Party-Libraries
 
 This project uses the following third party libraries
 
