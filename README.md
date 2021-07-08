@@ -66,55 +66,64 @@ After registering just log in with your credentials and start writing notes :)
 ### Create a Journal
 
 * To create a journal just click the floating action button in the home screen  
-  <img src="images/journal_1.png" alt="journal_1" width="200"/>
 * give your new journal a name and description  
-  <img src="images/journal_2.png" alt="journal_2" width="200"/>
-
 * and you are ready to fill it with notes  
-  <img src="images/journal_3.png" alt="journal_3" width="200"/>
+<p float="left">
+     <img src="images/journal_1.png" alt="journal_1" width="200"/>
+     <img src="images/journal_2.png" alt="journal_2" width="200"/>
+     <img src="images/journal_3.png" alt="journal_3" width="200"/>
+</p>
   
 ### Create a written note  
 
 * To create a new written note just click the floating action button, in the view that appears after you click on a journal, and click the icon to create a new written note    
-  <img src="images/wnote_1.png" alt="wnote_1" width="200"/>
 * Write down your awesome idea  
-  <img src="images/wnote_2.png" alt="wnote_2" width="200"/>
 * Save it  
-  <img src="images/wnote_3.png" alt="wnote_3" width="200"/>
 * And view it later to update or delete it  
-  <img src="images/wnote_4.png" alt="wnote_4" width="200"/>
+<p float="left">
+     <img src="images/wnote_1.png" alt="wnote_1" width="200"/>
+     <img src="images/wnote_2.png" alt="wnote_2" width="200"/>
+     <img src="images/wnote_3.png" alt="wnote_3" width="200"/>
+     <img src="images/wnote_4.png" alt="wnote_4" width="200"/>
+</p>
   
 ### Create a voice recoded note  
 
 * To create a voice recorded note just click the floating action button, in the view that appears after you click on a journal, and click the icon to create a new voice recorded note  
-  <img src="images/vnote_1.png" alt="vnote_1" width="200"/>
 * Start the recording and record your important ideas  
-  <img src="images/vnote_2.png" alt="vnote_2" width="200"/>
 * Save it for later  
-  <img src="images/vnote_3.png" alt="vnote_3" width="200"/>
 * And listen to it again  
-  <img src="images/vnote_4.png" alt="vnote_4" width="200"/>
+<p float="left">
+     <img src="images/vnote_1.png" alt="vnote_1" width="200"/>
+     <img src="images/vnote_2.png" alt="vnote_2" width="200"/>
+     <img src="images/vnote_3.png" alt="vnote_3" width="200"/>
+     <img src="images/vnote_4.png" alt="vnote_4" width="200"/>
+</p>  
 
 ### Create a freehand note  
 * To create a freehand note just click the floating action button, in the view that appears after you click on a journal, and click the icon to create a new freehand note  
-  <img src="images/fnote_1.png" alt="vnote_1" width="200"/>
 * Use your finger or a special pen to write and draw your freehand note  
-  <img src="images/fnote_2.png" alt="vnote_1" width="200"/>
 * Add shapes to make it even more personalized  
-  <img src="images/fnote_3.png" alt="vnote_1" width="200"/>
 * Save it by clicking the cloud symbol or by navigating back  
-  <img src="images/fnote_4.png" alt="vnote_1" width="200"/>
 * And view it later, update or delete it  
-  <img src="images/fnote_5.png" alt="vnote_1" width="200"/>
+<p float="left">
+     <img src="images/fnote_1.png" alt="fnote_1" width="180"/>
+     <img src="images/fnote_2.png" alt="fnote_2" width="180"/>
+     <img src="images/fnote_3.png" alt="fnote_3" width="180"/>
+     <img src="images/fnote_4.png" alt="fnote_4" width="180"/>
+     <img src="images/fnote_5.png" alt="fnote_5" width="180"/>
+</p>
 
 ### Print or share your written note to let others see your awesome ideas  
 * Click longer on the written note you want to print  
-  <img src="images/convert_1.png" alt="convert_1" width="200"/>
 * Select Convert to PDF  
-  <img src="images/convert_2.png" alt="convert_2" width="200"/>
 * Print it or save it in your download folder  
-  <img src="images/convert_3.png" alt="convert_3" width="200"/>
 * And share it with your friends  
-  <img src="images/convert_4.png" alt="convert_4" width="200"/>
+<p float="left">
+     <img src="images/convert_1.png" alt="convert_1" width="200"/>
+     <img src="images/convert_2.png" alt="convert_2" width="200"/>
+     <img src="images/convert_3.png" alt="convert_3" width="200"/>
+     <img src="images/convert_4.png" alt="convert_4" width="200"/>  
+</p>
 
 
