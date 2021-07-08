@@ -1,6 +1,8 @@
 package fh.campus.djournal.models
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 
 @Entity(tableName = "journal_table")

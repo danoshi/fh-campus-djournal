@@ -18,8 +18,8 @@ import fh.campus.djournal.adapters.JournalListAdapter
 import fh.campus.djournal.database.AppDatabase
 import fh.campus.djournal.databinding.FragmentHomeBinding
 import fh.campus.djournal.models.Journal
-import fh.campus.djournal.utils.JournalDialogs
 import fh.campus.djournal.repositories.JournalRepository
+import fh.campus.djournal.utils.JournalDialogs
 import fh.campus.djournal.viewmodels.JournalViewModel
 import fh.campus.djournal.viewmodels.JournalViewModelFactory
 
@@ -82,12 +82,13 @@ class HomeFragment : Fragment() {
 
         return binding.root
     }
+
     override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser
         val user = auth.uid
         Log.i("Users_UUID:", user.toString())
-        if(currentUser != null){
+        if (currentUser != null) {
             reload()
         }
     }
@@ -95,9 +96,9 @@ class HomeFragment : Fragment() {
     private fun reload() {
 
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return NavigationUI.
-        onNavDestinationSelected(item, requireView().findNavController())
+        return NavigationUI.onNavDestinationSelected(item, requireView().findNavController())
                 || super.onOptionsItemSelected(item)
     }
 

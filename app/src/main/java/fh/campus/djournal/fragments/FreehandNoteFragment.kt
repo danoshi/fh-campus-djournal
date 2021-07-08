@@ -1,6 +1,5 @@
 package fh.campus.djournal.fragments
 
-import android.R.attr.path
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -8,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -27,8 +25,10 @@ import fh.campus.djournal.repositories.NoteRepository
 import fh.campus.djournal.utils.Util
 import fh.campus.djournal.viewmodels.NoteViewModel
 import fh.campus.djournal.viewmodels.NoteViewModelFactory
-import kotlinx.android.synthetic.main.fragment_freehand_note.*
-import java.io.*
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 

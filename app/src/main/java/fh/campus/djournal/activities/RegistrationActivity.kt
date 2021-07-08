@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import fh.campus.djournal.R
@@ -30,24 +29,22 @@ class RegistrationActivity : AppCompatActivity() {
         switchToSignIn()
     }
 
-    private fun checkFields(){
+    private fun checkFields() {
         var emailAddress = binding.editTextTextEmailAddress
         var password = binding.editTextTextPassword
         var register = binding.buttonSignUp
         register.setOnClickListener {
-            if (emailAddress.text.toString().isEmpty() && password.text.toString().isEmpty()){
+            if (emailAddress.text.toString().isEmpty() && password.text.toString().isEmpty()) {
                 Toast.makeText(baseContext, "Fields are empty", Toast.LENGTH_SHORT).show()
-            }
-            else if (emailAddress.text.toString().isEmpty()){
+            } else if (emailAddress.text.toString().isEmpty()) {
                 binding.editTextTextPassword.setError("Please enter your email")
                 binding.editTextTextPassword.requestFocus()
-            }
-            else if (password.text.toString().isEmpty()){
+            } else if (password.text.toString().isEmpty()) {
                 binding.editTextTextEmailAddress.setError("Please enter your password")
                 binding.editTextTextEmailAddress.requestFocus()
-            }
-
-            else if (!(emailAddress.text.toString().isEmpty() && password.text.toString().isEmpty())) {
+            } else if (!(emailAddress.text.toString().isEmpty() && password.text.toString()
+                    .isEmpty())
+            ) {
                 createAccount(emailAddress.text.toString(), password.text.toString())
                 sendEmailVerification()
             }
@@ -74,12 +71,15 @@ class RegistrationActivity : AppCompatActivity() {
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("CreateUser", "createUserWithEmail:failure", task.exception)
-                    Toast.makeText(baseContext, "Authentication failed.",
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     updateUI(null)
                 }
             }
     }
+
     private fun sendEmailVerification() {
         try {
             val user = auth.currentUser!!
@@ -89,7 +89,8 @@ class RegistrationActivity : AppCompatActivity() {
                         this@RegistrationActivity,
                         "Verification email has been sent",
                         Toast.LENGTH_SHORT
-                    ).show() }
+                    ).show()
+                }
                 .addOnFailureListener {
                     Log.d(
                         "Email",
@@ -97,15 +98,17 @@ class RegistrationActivity : AppCompatActivity() {
                             this@RegistrationActivity,
                             "Verfication email have could not be sent",
                             Toast.LENGTH_SHORT
-                        ).show()) }
-        }catch (e: NullPointerException){
+                        ).show()
+                    )
+                }
+        } catch (e: NullPointerException) {
             print(e)
             Toast.makeText(this, "the provided email does not exist", Toast.LENGTH_SHORT).show()
         }
 
     }
 
-    private fun switchToSignIn(){
+    private fun switchToSignIn() {
         var signInLabel = binding.textViewSignIn
         signInLabel.setOnClickListener {
             startActivity(Intent(this@RegistrationActivity, LoginActivity::class.java))

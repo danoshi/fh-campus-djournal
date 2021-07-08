@@ -15,7 +15,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import fh.campus.djournal.R
 import fh.campus.djournal.databinding.ActivityLoginBinding
-import kotlin.math.log
 
 class LoginActivity : AppCompatActivity() {
 
@@ -37,30 +36,29 @@ class LoginActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser
-        if(currentUser != null){
+        if (currentUser != null) {
             reload()
         }
     }
 
-    private fun checkLogin(){
+    private fun checkLogin() {
         var emailAddress = binding.editTextTextEmailAddress
         var password = binding.editTextTextPassword
         var login = binding.buttonSignIn
 
         login.setOnClickListener {
 
-            if (emailAddress.text.toString().isEmpty() && password.text.toString().isEmpty()){
+            if (emailAddress.text.toString().isEmpty() && password.text.toString().isEmpty()) {
                 Toast.makeText(baseContext, "Fields are empty", Toast.LENGTH_SHORT).show()
-            }
-            else if (emailAddress.text.toString().isEmpty()){
+            } else if (emailAddress.text.toString().isEmpty()) {
                 binding.editTextTextEmailAddress.setError("Provide an email address")
                 binding.editTextTextEmailAddress.requestFocus()
-            }
-            else if (password.text.toString().isEmpty()){
+            } else if (password.text.toString().isEmpty()) {
                 binding.editTextTextPassword.setError("Provide an password")
                 binding.editTextTextPassword.requestFocus()
-            }
-            else if (!(emailAddress.text.toString().isEmpty() && password.text.toString().isEmpty())) {
+            } else if (!(emailAddress.text.toString().isEmpty() && password.text.toString()
+                    .isEmpty())
+            ) {
                 signIn(emailAddress.text.toString(), password.text.toString())
             }
         }
@@ -79,14 +77,16 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("Sign In", "signInWithEmail:failure", task.exception)
-                    Toast.makeText(baseContext, "Authentication failed.",
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     updateUI(null)
                 }
             }
     }
 
-    private fun forgetPw(){
+    private fun forgetPw() {
         val editText = EditText(this)
         val alertDialog = AlertDialog.Builder(this)
 
@@ -100,7 +100,8 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Reset link was successful send", Toast.LENGTH_SHORT).show()
             }
                 .addOnFailureListener {
-                    Toast.makeText(this, "Error! Reset link could not be send", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Error! Reset link could not be send", Toast.LENGTH_SHORT)
+                        .show()
                 }
         })
             .setNegativeButton("No", DialogInterface.OnClickListener { dialog, which ->
@@ -109,7 +110,7 @@ class LoginActivity : AppCompatActivity() {
         alertDialog.create().show();
     }
 
-    private fun switchSignUp(){
+    private fun switchSignUp() {
         var signUpLabel = binding.textViewSignUp
         signUpLabel.setOnClickListener {
             startActivity(Intent(this@LoginActivity, RegistrationActivity::class.java))

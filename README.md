@@ -17,11 +17,15 @@ and drawings.
 ## General info
 
 This project is part of the study course Mobile Application Development (MAD) with the purpose of getting a deeper
-understanding in the development of android mobile applications.
+understanding in the development of android mobile applications.  
+In no form is any monetization or commercialisation off this application intended!
 
 ## Technologies
 
-Project is created with:
+Project is created with:  
+* Android Studio  
+* Android SDK 21
+* Kotlin  
 
 
 
@@ -33,6 +37,7 @@ This project uses the following third party libraries
 * Floating action button speed dial https://github.com/leinardi/FloatingActionButtonSpeedDial?
 * Color picker https://github.com/aziztitu/AndroidPhotoshopColorPicker
 * RichTexteditor https://github.com/wasabeef/richeditor-android
+* CanvasEditor https://github.com/outsbook/canvaseditor
 
 The voice recorder was build with the help of https://www.youtube.com/channel/UCfHSrN68OiYgjl7aiyHYTMg
 
@@ -86,7 +91,16 @@ After registering just log in with your credentials and start writing notes :)
   <img src="images/vnote_4.png" alt="vnote_4" width="200"/>
 
 ### Create a freehand note  
-TODO  
+* To create a freehand note just click the floating action button, in the view that appears after you click on a journal, and click the icon to create a new freehand note  
+  <img src="images/fnote_1.png" alt="vnote_1" width="200"/>
+* Use your finger or a special pen to write and draw your freehand note  
+  <img src="images/fnote_2.png" alt="vnote_1" width="200"/>
+* Add shapes to make it even more personalized  
+  <img src="images/fnote_3.png" alt="vnote_1" width="200"/>
+* Save it by clicking the cloud symbol or by navigating back  
+  <img src="images/fnote_4.png" alt="vnote_1" width="200"/>
+* And view it later, update or delete it
+  <img src="images/fnote_5.png" alt="vnote_1" width="200"/>
 
 ### Print or share your written note to let others see your awesome ideas  
 * Click longer on the written note you want to print  

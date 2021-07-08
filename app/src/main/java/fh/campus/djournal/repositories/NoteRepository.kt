@@ -1,8 +1,8 @@
 package fh.campus.djournal.repositories
 
 import androidx.lifecycle.LiveData
-import fh.campus.djournal.models.Note
 import fh.campus.djournal.database.NoteDao
+import fh.campus.djournal.models.Note
 
 class NoteRepository(private val noteDao: NoteDao) {
 
@@ -13,7 +13,8 @@ class NoteRepository(private val noteDao: NoteDao) {
     suspend fun clearNotesFromJournal(journalId: Long) = noteDao.clearNotesFromJournal(journalId)
     fun getNoteById(noteId: Long): LiveData<Note> = noteDao.getNoteById(noteId)
     fun getAllNotes(): LiveData<List<Note>> = noteDao.getAll()
-    fun getNotesFromJournal(journalId: Long): LiveData<List<Note>> = noteDao.getNotesFromJournal(journalId)
+    fun getNotesFromJournal(journalId: Long): LiveData<List<Note>> =
+        noteDao.getNotesFromJournal(journalId)
 
 
     companion object {
