@@ -21,7 +21,7 @@ and drawings.
 
 ## General info
 
-This project is part of the study course Mobile Application Development (MAD) with the purpose of getting a deeper
+This project is part of the study course Mobile Application Development (MAD) on the FH-Campus Vienna with the purpose of getting a deeper
 understanding in the development of android mobile applications.  
 In no form is any monetization or commercialisation off this application intended!
 
@@ -107,11 +107,10 @@ After registering just log in with your credentials and start writing notes :)
 * Save it by clicking the cloud symbol or by navigating back  
 * And view it later, update or delete it  
 <p float="left">
-     <img src="images/fnote_1.png" alt="fnote_1" width="180"/>
-     <img src="images/fnote_2.png" alt="fnote_2" width="180"/>
-     <img src="images/fnote_3.png" alt="fnote_3" width="180"/>
-     <img src="images/fnote_4.png" alt="fnote_4" width="180"/>
-     <img src="images/fnote_5.png" alt="fnote_5" width="180"/>
+     <img src="images/fnote_1.png" alt="fnote_1" width="200"/>
+     <img src="images/fnote_2.png" alt="fnote_2" width="200"/>
+     <img src="images/fnote_3.png" alt="fnote_3" width="200"/>
+     <img src="images/fnote_5.png" alt="fnote_5" width="200"/>
 </p>
 
 ### Print or share your written note to let others see your awesome ideas  
