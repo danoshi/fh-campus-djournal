@@ -58,6 +58,7 @@ class FreehandNoteFragment : Fragment() {
         setHasOptionsMenu(true)
 
         canvasEditor = binding.canvasEditor
+        canvasEditor.setBackgroundColor(resources.getColor(R.color.white))
         initValue()
         initClickListener()
         initCanvasEditorListener()
