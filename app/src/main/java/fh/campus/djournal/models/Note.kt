@@ -24,7 +24,9 @@ data class Note(
     @ColumnInfo(name = "timestamp")
     val timestamp: String = "",
     @ColumnInfo(name = "layout")
-    var layout: String = ""
+    var layout: String = "",
+    @ColumnInfo(name = "freehand_path")
+    var freehandPath: String = ""
 ) {
     @PrimaryKey(autoGenerate = true)
     var noteId: Long = 0L

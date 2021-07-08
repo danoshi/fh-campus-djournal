@@ -70,12 +70,21 @@ class NotesFragment : Fragment() {
         val adapter = NoteListAdapter(
             dataSet = listOf(),
             onNoteItemShortClicked = { note ->
-                findNavController().navigate(
-                    NotesFragmentDirections.actionNotesFragmentToNoteDetailFragment(
-                        note.noteId,
-                        note.journalIdOfNote
+                if (note.freehandPath == "") {
+                    findNavController().navigate(
+                        NotesFragmentDirections.actionNotesFragmentToNoteDetailFragment(
+                            note.noteId,
+                            note.journalIdOfNote
+                        )
                     )
-                )
+                } else {
+                    findNavController().navigate(
+                        NotesFragmentDirections.actionNotesFragmentToFreehandNoteFragment(
+                            note.noteId,
+                            note.journalIdOfNote
+                        )
+                    )
+                }
             },
             onNoteItemLongClicked = { note ->
 //                CreatePdf(requireContext()
@@ -140,7 +149,7 @@ class NotesFragment : Fragment() {
                     .ic_draw_black_48dp
             )
                 .setFabBackgroundColor(resources.getColor(R.color.material_blue_700))
-                .setLabel("New Drawing Note")
+                .setLabel("New Freehand Note")
                 .setLabelBackgroundColor(Color.TRANSPARENT)
                 .create()
         )
@@ -165,7 +174,12 @@ class NotesFragment : Fragment() {
                     speedDialView.close() // To close the Speed Dial with animation
                 }
                 R.id.fab_drawing_note -> {
-                    //TODO: navigate to voice note fragment
+                    findNavController().navigate(
+                        NotesFragmentDirections.actionNotesFragmentToFreehandNoteFragment(
+                            -1L,
+                            journalId
+                        )
+                    )
                     speedDialView.close() // To close the Speed Dial with animation
                 }
             }

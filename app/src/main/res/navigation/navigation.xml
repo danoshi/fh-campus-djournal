@@ -67,6 +67,9 @@
             app:destination="@id/recordingFragment"
             app:popUpTo="@id/notesFragment"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_notesFragment_to_freehandNoteFragment"
+            app:destination="@id/freehandNoteFragment" />
     </fragment>
     <fragment
         android:id="@+id/noteDetailFragment"
@@ -105,5 +108,20 @@
         <argument
             android:name="journalId"
             app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/freehandNoteFragment"
+        android:name="fh.campus.djournal.fragments.FreehandNoteFragment"
+        android:label="fragment_freehand_note"
+        tools:layout="@layout/fragment_freehand_note" >
+        <argument
+            android:name="noteId"
+            app:argType="long" />
+        <argument
+            android:name="journalId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_freehandNoteFragment_to_notesFragment"
+            app:destination="@id/notesFragment" />
     </fragment>
 </navigation>
