@@ -6,9 +6,14 @@ import android.text.InputType
 import android.widget.EditText
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import fh.campus.djournal.models.Journal
+import fh.campus.djournal.viewmodels.AudioRecordViewModel
 import fh.campus.djournal.viewmodels.JournalViewModel
 
-class JournalDialogs(private val context: Context, private val journalViewModel: JournalViewModel) {
+class JournalDialogs(
+    private val context: Context,
+    private val journalViewModel: JournalViewModel,
+    private val recordViewModel: AudioRecordViewModel
+) {
     private var newTitle = ""
     private var newDescription = ""
 
@@ -41,6 +46,7 @@ class JournalDialogs(private val context: Context, private val journalViewModel:
             .setMessage("Are you sure you want to delete this journal?")
             .setPositiveButton("CONFIRM") { dialog, which ->
                 journalViewModel.deleteJournal(journal)
+                recordViewModel.clearRecordsFromJournal(journal.journalId)
             }
             .setNegativeButton("CANCEL") { dialog, which ->
                 dialog.cancel()
