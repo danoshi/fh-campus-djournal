@@ -11,6 +11,11 @@ and drawings.
 * [3th-Party-Libraries](#3th-Party-Libraries)
 * [Setup](#Setup)
 * [Usage](#Usage)
+    * [create a journal](#Create-a-journal)
+    * [create a written note](#create-a-written-note)
+    * [create a voice recorded note](#create-a-voice-recorded-note)
+    * [create a freehand note](#create-a-freehand-note)
+    * [Print or share your written note to let others see your awesome ideas](#Print-or-share-your-written-note-to-let-others-see-your-awesome-ideas)
 
 <hr>  
 
@@ -99,7 +104,7 @@ After registering just log in with your credentials and start writing notes :)
   <img src="images/fnote_3.png" alt="vnote_1" width="200"/>
 * Save it by clicking the cloud symbol or by navigating back  
   <img src="images/fnote_4.png" alt="vnote_1" width="200"/>
-* And view it later, update or delete it
+* And view it later, update or delete it  
   <img src="images/fnote_5.png" alt="vnote_1" width="200"/>
 
 ### Print or share your written note to let others see your awesome ideas  
