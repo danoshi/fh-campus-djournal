@@ -122,6 +122,7 @@
             app:argType="long" />
         <action
             android:id="@+id/action_freehandNoteFragment_to_notesFragment"
-            app:destination="@id/notesFragment" />
+            app:destination="@id/notesFragment"
+            app:popUpTo="@id/notesFragment" />
     </fragment>
 </navigation>
